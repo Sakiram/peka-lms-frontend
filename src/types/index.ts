@@ -14,6 +14,9 @@ export interface User {
   created_by: string;
   created_at: string;
   updated_at: string;
+  organization: {
+    org_name: string;
+  }
 }
 
 export interface AuthState {

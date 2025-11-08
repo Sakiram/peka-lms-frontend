@@ -9,11 +9,12 @@ import { usersAPI, type User } from '@/api/endpoints/users';
 import { UsersFilters, type FilterValues } from '@/components/ui/layout/UserFilters';
 import { UsersTable } from '@/components/ui/layout/UserTable';
 import { UsersPagination } from '@/components/ui/layout/UserPagination';
+import { EditUserModal } from '@/components/ui/layout/EditUserModal';
+import { DeleteUserDialog } from '@/components/ui/layout/DeleteUserDialog';
 
 export function Organization() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  // Permission check
   if (!user || user.role !== 'ADMIN') {
     return (
       <DashboardLayout>
@@ -27,7 +28,7 @@ export function Organization() {
     );
   }
 
-  // State
+  // Users state
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -35,6 +36,12 @@ export function Organization() {
   const [limit, setLimit] = useState(10);
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
+
+  // Managers state
+  const [managers, setManagers] = useState<User[]>([]);
+  const [loadingManagers, setLoadingManagers] = useState(false);
+
+  // Filters state
   const [filters, setFilters] = useState<FilterValues>({
     search: '',
     role: '',
@@ -42,6 +49,12 @@ export function Organization() {
     sortBy: 'username',
     order: 'asc',
   });
+
+  // Modal states
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deletingUser, setDeletingUser] = useState<User | null>(null);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   // Load users
   const loadUsers = useCallback(async () => {
@@ -63,7 +76,6 @@ export function Organization() {
       setTotal(response.data.total);
       setTotalPages(response.data.totalPages);
     } catch (err: any) {
-      console.error('Failed to load users:', err);
       setError(
         err.response?.data?.message ||
         'Failed to load users. Please try again.'
@@ -73,24 +85,42 @@ export function Organization() {
     }
   }, [page, limit, filters]);
 
-  // Load users on mount and when filters/pagination change
+  // Load managers
+  const loadManagers = useCallback(async () => {
+    try {
+      setLoadingManagers(true);
+      const data = await usersAPI.getManagers();
+      setManagers(data);
+    } catch (err) {
+      console.error('Failed to load managers:', err);
+    } finally {
+      setLoadingManagers(false);
+    }
+  }, []);
+
+  // Load on mount and when filters change
   useEffect(() => {
     loadUsers();
-  }, [loadUsers]);
+    loadManagers();
+  }, [loadUsers, loadManagers]);
 
   const handleFiltersChange = (newFilters: FilterValues) => {
     setFilters(newFilters);
     setPage(1);
   };
 
-  const handlePageChange = (newPage: number) => {
-    setPage(newPage);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleEditClick = (selectedUser: User) => {
+    setEditingUser(selectedUser);
+    setEditModalOpen(true);
   };
 
-  const handleLimitChange = (newLimit: number) => {
-    setLimit(newLimit);
-    setPage(1);
+  const handleDeleteClick = (selectedUser: User) => {
+    setDeletingUser(selectedUser);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleRefresh = () => {
+    loadUsers();
   };
 
   return (
@@ -123,9 +153,15 @@ export function Organization() {
             isLoading={loading}
           />
 
-          {/* Users Table */}
+          {/* Users Table - Pass currentUserId */}
           <div className="w-full overflow-auto">
-            <UsersTable users={users} isLoading={loading} />
+            <UsersTable
+              users={users}
+              isLoading={loading}
+              currentUserId={user.id}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
           </div>
 
           {/* Pagination */}
@@ -135,8 +171,11 @@ export function Organization() {
               limit={limit}
               total={total}
               totalPages={totalPages}
-              onPageChange={handlePageChange}
-              onLimitChange={handleLimitChange}
+              onPageChange={setPage}
+              onLimitChange={(newLimit) => {
+                setLimit(newLimit);
+                setPage(1);
+              }}
             />
           )}
 
@@ -150,6 +189,30 @@ export function Organization() {
           )}
         </CardContent>
       </Card>
+
+      {/* Edit Modal */}
+      <EditUserModal
+        user={editingUser}
+        open={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setEditingUser(null);
+        }}
+        onSuccess={handleRefresh}
+        managers={managers}
+        isLoadingManagers={loadingManagers}
+      />
+
+      {/* Delete Dialog */}
+      <DeleteUserDialog
+        user={deletingUser}
+        open={deleteDialogOpen}
+        onClose={() => {
+          setDeleteDialogOpen(false);
+          setDeletingUser(null);
+        }}
+        onSuccess={handleRefresh}
+      />
     </DashboardLayout>
   );
 }

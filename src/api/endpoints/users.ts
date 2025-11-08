@@ -38,6 +38,13 @@ export interface UsersResponse {
   };
 }
 
+export interface UpdateUserPayload {
+  email?: string;
+  role?: string;
+  status?: string;
+  manager_id?: string | null;
+}
+
 export const usersAPI = {
   getUsers: async (filters: UserFilters = {}): Promise<UsersResponse> => {
     const params = new URLSearchParams();
@@ -49,11 +56,44 @@ export const usersAPI = {
     if (filters.sortBy) params.append('sortBy', filters.sortBy);
     if (filters.order) params.append('order', filters.order);
     if (filters.search) params.append('search', filters.search);
-
+    
+    params.append('_t', Date.now().toString());
     const { data } = await apiClient.get<UsersResponse>(
       `/users?${params.toString()}`
     );
     
+    return data;
+  },
+  getManagers: async (): Promise<User[]> => {
+    const response = await apiClient.get<UsersResponse>(
+      `/users?limit=100&role=ADMIN&_t=${Date.now()}`
+    );
+    const admins = response.data.data.data;
+
+    const hrs = await apiClient.get<UsersResponse>(
+      `/users?limit=100&role=HR&_t=${Date.now()}`
+    );
+    const hrUsers = hrs.data.data.data;
+
+    const managers = await apiClient.get<UsersResponse>(
+      `/users?limit=100&role=MANAGER&_t=${Date.now()}`
+    );
+    const managerUsers = managers.data.data.data;
+
+    return [...admins, ...hrUsers, ...managerUsers];
+  },
+
+  // Update user
+  updateUser: async (userId: string, payload: UpdateUserPayload) => {
+    const { data } = await apiClient.put(
+      `/users/profile/${userId}`,
+      payload
+    );
+    return data;
+  },
+
+  deleteUser: async (userId: string) => {
+    const { data } = await apiClient.delete(`/users/${userId}`);
     return data;
   },
 };

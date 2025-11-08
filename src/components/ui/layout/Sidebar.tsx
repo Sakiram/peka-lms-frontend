@@ -85,7 +85,7 @@ export function Sidebar() {
       >
         {/* Sidebar Header */}
         <div className="p-6 border-b border-border">
-          <h1 className="text-xl font-bold">LMS</h1>
+          <h1 className="text-xl font-bold">{user?.organization?.org_name}</h1>
           <p className="text-xs text-muted-foreground mt-1">
             {user?.role || 'User'}
           </p>

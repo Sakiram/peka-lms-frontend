@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Input } from '@/components/ui/shadcn/input';
 import { Button } from '@/components/ui/shadcn/button';
 import {
@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/shadcn/select';
-import { Search, X } from 'lucide-react';
+import { Search, X, Loader } from 'lucide-react';
 
 interface UsersFiltersProps {
   onFiltersChange: (filters: FilterValues) => void;
@@ -33,18 +33,35 @@ const defaultFilters: FilterValues = {
 
 export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) {
   const [filters, setFilters] = useState<FilterValues>(defaultFilters);
-
+  const [searchLoading, setSearchLoading] = useState(false);
+  const debounceTimer = useRef<number | null>(null);
   const handleChange = useCallback(
     (key: keyof FilterValues, value: string) => {
       const newFilters = { ...filters, [key]: value };
       setFilters(newFilters);
-      onFiltersChange(newFilters);
+       if (key === 'search') {
+        setSearchLoading(true);
+        if (debounceTimer.current) {
+          clearTimeout(debounceTimer.current);
+        }
+
+        debounceTimer.current = setTimeout(() => {
+          onFiltersChange(newFilters);
+          setSearchLoading(false);
+        }, 500);
+      } else {
+        onFiltersChange(newFilters);
+      }
     },
     [filters, onFiltersChange]
   );
 
   const handleReset = useCallback(() => {
+    if (debounceTimer.current) {
+      clearTimeout(debounceTimer.current);
+    }
     setFilters(defaultFilters);
+    setSearchLoading(false);
     onFiltersChange(defaultFilters);
   }, [onFiltersChange]);
 
@@ -58,9 +75,13 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
             placeholder="Search by name, email, or username..."
             value={filters.search}
             onChange={(e) => handleChange('search', e.target.value)}
-            className="pl-10"
+            className="pl-10 pr-10"
             disabled={isLoading}
           />
+          {/* Show loading indicator while search is debouncing */}
+          {searchLoading && (
+            <Loader className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground animate-spin" />
+          )}
         </div>
       </div>
 
