@@ -12,6 +12,18 @@ export interface Holiday {
   is_upcoming?: boolean;
 }
 
+export interface CreateHolidayPayload {
+  name: string;
+  holiday_date: string;
+  recurring: boolean;
+}
+
+export interface UpdateHolidayPayload {
+  name: string;
+  holiday_date: string;
+  recurring: boolean;
+}
+
 export const holidaysAPI = {
   getUpcomingHolidays: async (): Promise<Holiday[]> => {
     const { data } = await apiClient.get<Holiday[]>('/holidays?next=30d');
@@ -20,6 +32,23 @@ export const holidaysAPI = {
   
   getAllHolidays: async (): Promise<Holiday[]> => {
     const { data } = await apiClient.get<Holiday[]>('/holidays');
+    return data;
+  },
+  // Create holiday
+  createHoliday: async (payload: CreateHolidayPayload) => {
+    const { data } = await apiClient.post('/holidays', payload);
+    return data;
+  },
+
+  // Update holiday
+  updateHoliday: async (id: string, payload: UpdateHolidayPayload) => {
+    const { data } = await apiClient.put(`/holidays/${id}`, payload);
+    return data;
+  },
+
+  // Delete holiday
+  deleteHoliday: async (id: string) => {
+    const { data } = await apiClient.delete(`/holidays/${id}`);
     return data;
   },
 };

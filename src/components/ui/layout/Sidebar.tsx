@@ -47,6 +47,12 @@ export function Sidebar() {
         roles: ['ADMIN', 'HR'], // Only ADMIN and HR
       },
       {
+        label: 'Leave Types',
+        path: '/leave-types',
+        icon: <FileText className="h-5 w-5" />,
+        roles: ['ADMIN', 'HR'], // Only ADMIN and HR
+      },
+      {
         label: 'Organization',
         path: '/organization',
         icon: <Building2 className="h-5 w-5" />,

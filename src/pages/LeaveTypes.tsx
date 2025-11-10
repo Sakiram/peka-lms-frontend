@@ -5,17 +5,17 @@ import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { Calendar, AlertCircle, CalendarPlus } from 'lucide-react';
-import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
-import { HolidaysTable } from '@/components/ui/layout/HolidaysTable';
-import { AddHolidayModal } from '@/components/ui/layout/AddHolidayModal';
-import { EditHolidayModal } from '@/components/ui/layout/EditHolidayModal';
-import { DeleteHolidayDialog } from '@/components/ui/layout/DeleteHolidayDialog';
+import { FileText, AlertCircle, Plus } from 'lucide-react';
+import { leaveTypesAPI, type LeaveType } from '@/api/endpoints/leaveTypes';
+import { LeaveTypesTable } from '@/components/ui/leaveTypes/LeaveTypesTable';
+import { AddLeaveTypeModal } from '@/components/ui/leaveTypes/AddLeaveTypeModal';
+import { EditLeaveTypeModal } from '@/components/ui/leaveTypes/EditLeaveTypeModal';
+import { DeleteLeaveTypeDialog } from '@/components/ui/leaveTypes/DeleteLeaveTypeDialog';
 
-export function Holidays() {
+export function LeaveTypes() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  // Permission check
+  // Permission check - Only ADMIN and HR
   if (!user || !['ADMIN', 'HR'].includes(user.role)) {
     return (
       <DashboardLayout>
@@ -29,30 +29,26 @@ export function Holidays() {
     );
   }
 
-  const [holidays, setHolidays] = useState<Holiday[]>([]);
+  const [leaveTypes, setLeaveTypes] = useState<LeaveType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   // Modal states
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [editingHoliday, setEditingHoliday] = useState<Holiday | null>(null);
+  const [editingLeaveType, setEditingLeaveType] = useState<LeaveType | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const [deletingHoliday, setDeletingHoliday] = useState<Holiday | null>(null);
+  const [deletingLeaveType, setDeletingLeaveType] = useState<LeaveType | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-  const loadHolidays = async () => {
+  const loadLeaveTypes = async () => {
     try {
       setLoading(true);
       setError('');
-      const data = await holidaysAPI.getAllHolidays();
-      // Sort by date
-      const sorted = data.sort((a, b) => 
-        new Date(a.holiday_date).getTime() - new Date(b.holiday_date).getTime()
-      );
-      setHolidays(sorted);
+      const data = await leaveTypesAPI.getAllLeaveTypes();
+      setLeaveTypes(data);
     } catch (err: any) {
       setError(
-        err.response?.data?.message || 'Failed to load holidays'
+        err.response?.data?.message || 'Failed to load leave types'
       );
     } finally {
       setLoading(false);
@@ -60,16 +56,16 @@ export function Holidays() {
   };
 
   useEffect(() => {
-    loadHolidays();
+    loadLeaveTypes();
   }, []);
 
-  const handleEditClick = (holiday: Holiday) => {
-    setEditingHoliday(holiday);
+  const handleEditClick = (leaveType: LeaveType) => {
+    setEditingLeaveType(leaveType);
     setEditModalOpen(true);
   };
 
-  const handleDeleteClick = (holiday: Holiday) => {
-    setDeletingHoliday(holiday);
+  const handleDeleteClick = (leaveType: LeaveType) => {
+    setDeletingLeaveType(leaveType);
     setDeleteDialogOpen(true);
   };
 
@@ -78,14 +74,14 @@ export function Holidays() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Holidays</h1>
+          <h1 className="text-3xl font-bold">Leave Types</h1>
           <p className="text-muted-foreground">
-            Manage company holidays and events
+            Manage leave types and policies
           </p>
         </div>
         <Button onClick={() => setAddModalOpen(true)}>
-          <CalendarPlus className="h-4 w-4 mr-2" />
-          Add Holiday
+          <Plus className="h-4 w-4 mr-2" />
+          Add Leave Type
         </Button>
       </div>
 
@@ -96,17 +92,17 @@ export function Holidays() {
         </Alert>
       )}
 
-      {/* Holidays Table */}
+      {/* Leave Types Table */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            All Holidays ({holidays.length})
+            <FileText className="h-5 w-5" />
+            All Leave Types ({leaveTypes.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <HolidaysTable
-            holidays={holidays}
+          <LeaveTypesTable
+            leaveTypes={leaveTypes}
             isLoading={loading}
             onEdit={handleEditClick}
             onDelete={handleDeleteClick}
@@ -114,33 +110,33 @@ export function Holidays() {
         </CardContent>
       </Card>
 
-      {/* Add Holiday Modal */}
-      <AddHolidayModal
+      {/* Add Leave Type Modal */}
+      <AddLeaveTypeModal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
-        onSuccess={loadHolidays}
+        onSuccess={loadLeaveTypes}
       />
 
-      {/* Edit Holiday Modal */}
-      <EditHolidayModal
-        holiday={editingHoliday}
+      {/* Edit Leave Type Modal */}
+      <EditLeaveTypeModal
+        leaveType={editingLeaveType}
         open={editModalOpen}
         onClose={() => {
           setEditModalOpen(false);
-          setEditingHoliday(null);
+          setEditingLeaveType(null);
         }}
-        onSuccess={loadHolidays}
+        onSuccess={loadLeaveTypes}
       />
 
-      {/* Delete Holiday Dialog */}
-      <DeleteHolidayDialog
-        holiday={deletingHoliday}
+      {/* Delete Leave Type Dialog */}
+      <DeleteLeaveTypeDialog
+        leaveType={deletingLeaveType}
         open={deleteDialogOpen}
         onClose={() => {
           setDeleteDialogOpen(false);
-          setDeletingHoliday(null);
+          setDeletingLeaveType(null);
         }}
-        onSuccess={loadHolidays}
+        onSuccess={loadLeaveTypes}
       />
     </DashboardLayout>
   );

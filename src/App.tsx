@@ -10,6 +10,7 @@ import { SetPassword } from '@/pages/auth/SetPassword';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import type { Dispatch } from '@/store';
+import { LeaveTypes } from './pages/LeaveTypes';
 
 function App() {
   const dispatch = useDispatch<Dispatch>();
@@ -41,14 +42,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="/leaves/:id"
+        <Route
+          path="/leave-types"
           element={
             <ProtectedRoute>
-              <LeaveDetails />
+              <LeaveTypes />
             </ProtectedRoute>
           }
-        /> */}
+        />
          <Route
           path="/holidays"
           element={

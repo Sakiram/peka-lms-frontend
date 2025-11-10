@@ -4,13 +4,15 @@ import type { RootState } from '@/store';
 import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { Building2, AlertCircle } from 'lucide-react';
+import { Building2, AlertCircle, UserPlus } from 'lucide-react';
 import { usersAPI, type User } from '@/api/endpoints/users';
 import { UsersFilters, type FilterValues } from '@/components/ui/layout/UserFilters';
 import { UsersTable } from '@/components/ui/layout/UserTable';
 import { UsersPagination } from '@/components/ui/layout/UserPagination';
 import { EditUserModal } from '@/components/ui/layout/EditUserModal';
 import { DeleteUserDialog } from '@/components/ui/layout/DeleteUserDialog';
+import { InviteUserModal } from '@/components/ui/layout/InviteUserModal';
+import { Button } from '@/components/ui/shadcn/button';
 
 export function Organization() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -55,8 +57,10 @@ export function Organization() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deletingUser, setDeletingUser] = useState<User | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [inviteModalOpen, setInviteModalOpen] = useState(false); // Add this
 
-  // Load users
+  // ... existing loadUsers and loadManagers functions ...
+
   const loadUsers = useCallback(async () => {
     try {
       setLoading(true);
@@ -85,7 +89,6 @@ export function Organization() {
     }
   }, [page, limit, filters]);
 
-  // Load managers
   const loadManagers = useCallback(async () => {
     try {
       setLoadingManagers(true);
@@ -98,7 +101,6 @@ export function Organization() {
     }
   }, []);
 
-  // Load on mount and when filters change
   useEffect(() => {
     loadUsers();
     loadManagers();
@@ -125,11 +127,18 @@ export function Organization() {
 
   return (
     <DashboardLayout>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Organization</h1>
-        <p className="text-muted-foreground">
-          Manage employees and organizational settings
-        </p>
+      {/* Header with Invite Button */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold">Organization</h1>
+          <p className="text-muted-foreground">
+            Manage employees and organizational settings
+          </p>
+        </div>
+        <Button onClick={() => setInviteModalOpen(true)}>
+          <UserPlus className="h-4 w-4 mr-2" />
+          Invite User
+        </Button>
       </div>
 
       {error && (
@@ -147,13 +156,11 @@ export function Organization() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Filters */}
           <UsersFilters
             onFiltersChange={handleFiltersChange}
             isLoading={loading}
           />
 
-          {/* Users Table - Pass currentUserId */}
           <div className="w-full overflow-auto">
             <UsersTable
               users={users}
@@ -164,7 +171,6 @@ export function Organization() {
             />
           </div>
 
-          {/* Pagination */}
           {users.length > 0 && (
             <UsersPagination
               page={page}
@@ -179,7 +185,6 @@ export function Organization() {
             />
           )}
 
-          {/* Empty State */}
           {!loading && users.length === 0 && !error && (
             <div className="text-center py-12 text-muted-foreground">
               <Building2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -212,6 +217,15 @@ export function Organization() {
           setDeletingUser(null);
         }}
         onSuccess={handleRefresh}
+      />
+
+      {/* Invite Modal - Add this */}
+      <InviteUserModal
+        open={inviteModalOpen}
+        onClose={() => setInviteModalOpen(false)}
+        onSuccess={handleRefresh}
+        managers={managers}
+        isLoadingManagers={loadingManagers}
       />
     </DashboardLayout>
   );
