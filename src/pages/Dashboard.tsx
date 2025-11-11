@@ -1,21 +1,12 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import type { RootState, Dispatch } from '@/store';
-import { Button } from '@/components/ui/shadcn/button';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store';
 import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { PendingApprovalsCard } from '@/components/dashboard/PendingApprovalsCard';
 import { UpcomingHolidaysCard } from '@/components/dashboard/UpcomingHolidaysCard';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 export function Dashboard() {
-  const dispatch = useDispatch<Dispatch>();
-  const navigate = useNavigate();
   const { user } = useSelector((state: RootState) => state.auth);
-
-  const handleLogout = async () => {
-    await dispatch.auth.logout();
-    navigate('/login');
-  };
 
   return (
     <DashboardLayout>
@@ -29,9 +20,6 @@ export function Dashboard() {
         </div>
         <div className="flex items-center gap-2">
           <ThemeSwitcher />
-          <Button onClick={handleLogout} variant="outline">
-            Logout
-          </Button>
         </div>
       </div>
 

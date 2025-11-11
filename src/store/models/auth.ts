@@ -28,6 +28,19 @@ export const auth = createModel<RootModel>()({
       };
     },
 
+    updateUser(state, payload: Partial<User>) {
+      if (!state.user) return state;
+      const updatedUser = {
+        ...state.user,
+        ...payload,
+      };      
+      setUserMetadata(updatedUser);
+      return {
+        ...state,
+        user: updatedUser,
+      };
+    },
+
     clearAuth(state) {
       removeUserMetadata();
       return {

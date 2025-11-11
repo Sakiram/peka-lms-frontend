@@ -18,7 +18,7 @@ export interface User {
   last_name: string;
   status: 'ACTIVE' | 'INACTIVE';
   role: 'ADMIN' | 'HR' | 'MANAGER' | 'EMPLOYEE';
-  contact_no: string | null;
+  contact_no: number | null;
   profile_pic_url: string | null;
   join_date: string;
   manager_id: string | null;
@@ -43,6 +43,15 @@ export interface UpdateUserPayload {
   role?: string;
   status?: string;
   manager_id?: string | null;
+  profile_pic_url?: string;
+  contact_no?: number | null;
+  first_name?: string;
+  last_name?: string;
+}
+
+export interface UploadPicResponse {
+  success: boolean;
+  data: string;
 }
 
 export const usersAPI = {
@@ -94,6 +103,22 @@ export const usersAPI = {
 
   deleteUser: async (userId: string) => {
     const { data } = await apiClient.delete(`/users/${userId}`);
+    return data;
+  },
+
+  uploadProfilePic: async (file: File): Promise<UploadPicResponse> => {
+    const formData = new FormData();
+    formData.append('profile_pic', file);
+
+    const { data } = await apiClient.post<UploadPicResponse>(
+      '/users/upload-pic',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
     return data;
   },
 };

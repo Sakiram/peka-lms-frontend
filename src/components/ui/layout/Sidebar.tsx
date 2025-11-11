@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
-import type { RootState } from '@/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import type { RootState, Dispatch } from '@/store';
+import { UserProfileModal } from '@/components/ui/layout/UserProfileModal';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/shadcn/avatar';
 import { Button } from '@/components/ui/shadcn/button';
 import {
   LayoutDashboard,
@@ -10,6 +12,7 @@ import {
   FileText,
   Menu,
   X,
+  LogOut,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -22,8 +25,11 @@ interface MenuItem {
 
 export function Sidebar() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<Dispatch>();
+  const navigate = useNavigate();
+  const [profileModalOpen, setProfileModalOpen] = useState(false);
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(true); // Toggle sidebar on mobile
+  const [isOpen, setIsOpen] = useState(true);
 
   // Define menu items with role-based access
   const menuItems: MenuItem[] = useMemo(() => {
@@ -77,6 +83,11 @@ export function Sidebar() {
     return location.pathname === path;
   };
 
+  const handleLogout = async () => {
+    await dispatch.auth.logout();
+    navigate('/login');
+  };
+
   return (
     <>
       {/* Mobile Toggle Button */}
@@ -91,7 +102,7 @@ export function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-card border-r border-border transition-transform duration-300 ease-in-out z-40 ${
+        className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-card border-r border-border transition-transform duration-300 ease-in-out z-40 flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
@@ -103,13 +114,13 @@ export function Sidebar() {
           </p>
         </div>
 
-        {/* Menu Items */}
-        <nav className="p-4 space-y-2">
+        {/* Menu Items - Scrollable */}
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {visibleMenuItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
-              onClick={() => setIsOpen(false)} // Close on mobile after click
+              onClick={() => setIsOpen(false)}
               className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-colors ${
                 isActive(item.path)
                   ? 'bg-primary text-primary-foreground'
@@ -122,13 +133,19 @@ export function Sidebar() {
           ))}
         </nav>
 
-        {/* User Info Section */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-border bg-card">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-bold">
-              {user?.first_name?.charAt(0).toUpperCase()}
-            </div>
-            <div className="flex-1 min-w-0">
+        {/* User Info & Logout Section */}
+        <div className="border-t border-border bg-card p-4">
+          <button
+            onClick={() => setProfileModalOpen(true)}
+            className="flex items-center gap-2 mb-3 w-full hover:bg-muted p-2 rounded-lg transition-colors"
+          >
+            <Avatar className="h-8 w-8">
+              <AvatarImage  src={user?.profile_pic_url ? `${user.profile_pic_url}?t=${Date.now()}` : undefined} alt="Profile" />
+              <AvatarFallback className="text-sm font-bold">
+                {user?.first_name?.charAt(0).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1 min-w-0 text-left">
               <p className="text-sm font-medium truncate">
                 {user?.first_name} {user?.last_name}
               </p>
@@ -136,11 +153,24 @@ export function Sidebar() {
                 {user?.email}
               </p>
             </div>
-          </div>
+          </button>
+          <Button 
+            onClick={handleLogout} 
+            variant="outline" 
+            className="w-full"
+            size="sm"
+          >
+            <LogOut className="h-4 w-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </aside>
 
-      {/* Mobile Overlay */}
+      <UserProfileModal
+        open={profileModalOpen}
+        onClose={() => setProfileModalOpen(false)}
+      />
+
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 md:hidden z-30"

@@ -8,7 +8,7 @@ export interface User {
   role: string;
   manager_id: string | null;
   profile_pic_url: string;
-  contact_no: string;
+  contact_no: number;
   join_date: string;
   status: string;
   created_by: string;

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export type ThemeVariant = 'light' | 'dark' | 'brand' | 'highcontrast';
+export type ThemeVariant = 'light' | 'dark';
 
 const THEME_KEY = 'app-theme';
 
@@ -24,7 +24,7 @@ export const useTheme = () => {
     const root = document.documentElement;
     
     // Remove all theme classes
-    root.classList.remove('light', 'dark', 'brand', 'highcontrast');
+    root.classList.remove('light', 'dark');
     
     // Add new theme class
     root.classList.add(newTheme);

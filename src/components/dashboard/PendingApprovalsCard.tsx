@@ -19,7 +19,7 @@ export function PendingApprovalsCard() {
   const loadPendingApprovals = async () => {
     try {
       const data = await leavesAPI.getPendingApprovals();
-      setPendingLeaves(data.slice(0, 5)); // Show max 5
+      setPendingLeaves(data.slice(0, 5));
     } catch (error) {
       console.error('Failed to load pending approvals:', error);
     } finally {
@@ -27,8 +27,8 @@ export function PendingApprovalsCard() {
     }
   };
 
-  const handleLeaveClick = (leaveId: string) => {
-    navigate(`/leaves/${leaveId}`);
+  const handleLeaveClick = () => {
+    navigate(`/leaves`);
   };
 
   if (loading) {
@@ -80,7 +80,7 @@ export function PendingApprovalsCard() {
             {pendingLeaves.map((leave) => (
               <div
                 key={leave.id}
-                onClick={() => handleLeaveClick(leave.id)}
+                onClick={() => handleLeaveClick()}
                 className="flex items-center justify-between p-3 rounded-lg border hover:bg-accent cursor-pointer transition-colors"
               >
                 <div className="flex-1">

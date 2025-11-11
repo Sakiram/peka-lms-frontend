@@ -61,19 +61,6 @@ export function ThemeSwitcher() {
           <Moon className="mr-2 h-4 w-4" />
           <span>Dark</span>
         </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setTheme('purple')}
-          className={theme === 'purple' ? 'bg-accent' : ''}
-        >
-          <Palette className="mr-2 h-4 w-4" />
-          <span>Brand</span>
-        </DropdownMenuItem>
-        <DropdownMenuItem 
-          onClick={() => setTheme('highcontrast')}
-          className={theme === 'highcontrast' ? 'bg-accent' : ''}
-        >
-          <span>High Contrast</span>
-        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

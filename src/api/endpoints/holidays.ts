@@ -30,8 +30,14 @@ export const holidaysAPI = {
     return data;
   },
   
-  getAllHolidays: async (): Promise<Holiday[]> => {
+  getCurrentHolidays: async (): Promise<Holiday[]> => {
     const { data } = await apiClient.get<Holiday[]>('/holidays');
+    return data;
+  },
+  
+  getAllHolidays: async (allYears: boolean = false): Promise<Holiday[]> => {
+    const url = allYears ? '/holidays?all=true' : '/holidays';
+    const { data } = await apiClient.get<Holiday[]>(url);
     return data;
   },
   // Create holiday

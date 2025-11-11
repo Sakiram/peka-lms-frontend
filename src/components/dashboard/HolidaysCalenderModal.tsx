@@ -29,7 +29,7 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
 
   const loadAllHolidays = async () => {
     try {
-      const data = await holidaysAPI.getAllHolidays();
+      const data = await holidaysAPI.getCurrentHolidays();
       const sorted = data.sort((a, b) => 
         new Date(a.holiday_date).getTime() - new Date(b.holiday_date).getTime()
       );
@@ -79,10 +79,13 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh]">
+      <DialogContent 
+        className="max-w-[95vw] sm:max-w-[85vw] md:max-w-[75vw] lg:max-w-[70vw] w-auto max-h-[90vh]"
+        style={{maxWidth: '80vw', width: '80vw'}}
+      >
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-2xl">
-            <Calendar className="h-6 w-6" />
+          <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
+            <Calendar className="h-5 w-5 md:h-6 md:w-6" />
             Holidays {selectedYear}
           </DialogTitle>
         </DialogHeader>
@@ -92,11 +95,11 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
             <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full" />
           </div>
         ) : (
-          <ScrollArea className="h-[calc(90vh-120px)]">
-            <div className="max-w-[600px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+          <ScrollArea className="h-[calc(90vh-180px)] mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 p-2">
               {holidays.map((holiday) => {
                 const date = new Date(holiday.holiday_date);
-                const monthIndex = date.getMonth(); // 0-11
+                const monthIndex = date.getMonth();
                 const monthName = format(date, 'MMMM');
                 const dayName = format(date, 'EEEE');
                 const dayNumber = format(date, 'dd');
@@ -107,36 +110,36 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
                     className={`rounded-lg border-2 overflow-hidden shadow-sm hover:shadow-md transition-shadow ${getMonthColor(monthIndex)}`}
                   >
                     {/* Month Header */}
-                    <div className={`text-center font-bold py-2 text-sm ${getMonthHeaderColor(monthIndex)}`}>
+                    <div className={`text-center font-bold py-1.5 md:py-2 text-xs md:text-sm ${getMonthHeaderColor(monthIndex)}`}>
                       {monthName.toUpperCase()}
                     </div>
 
                     {/* Date Display */}
-                    <div className="p-4">
-                      <div className="text-center mb-3">
-                        <div className="text-5xl font-bold leading-none mb-1">
+                    <div className="p-2 md:p-3 lg:p-4">
+                      <div className="text-center mb-2 md:mb-3">
+                        <div className="text-3xl md:text-4xl lg:text-5xl font-bold leading-none mb-1">
                           {dayNumber}
                         </div>
-                        <div className="text-xs font-medium opacity-75 uppercase">
+                        <div className="text-[10px] md:text-xs font-medium opacity-75 uppercase">
                           {dayName}
                         </div>
                       </div>
 
                       {/* Holiday Name */}
                       <div className="text-center">
-                        <p className="font-semibold text-sm leading-tight mb-2">
+                        <p className="font-semibold text-xs md:text-sm leading-tight mb-1.5 md:mb-2 line-clamp-2">
                           {holiday.name}
                         </p>
                         
                         {/* Badges */}
                         <div className="flex flex-wrap gap-1 justify-center">
                           {holiday.recurring && (
-                            <Badge variant="outline" className="text-xs">
+                            <Badge variant="outline" className="text-[10px] md:text-xs px-1 py-0">
                               Recurring
                             </Badge>
                           )}
                           {holiday.is_upcoming && (
-                            <Badge variant="secondary" className="text-xs">
+                            <Badge variant="secondary" className="text-[10px] md:text-xs px-1 py-0">
                               Upcoming
                             </Badge>
                           )}
@@ -150,9 +153,9 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
 
             {holidays.length === 0 && (
               <div className="text-center py-12 text-muted-foreground">
-                <Calendar className="h-16 w-16 mx-auto mb-4 opacity-50" />
-                <p className="text-lg font-medium">No holidays found</p>
-                <p className="text-sm">There are no holidays scheduled for this year</p>
+                <Calendar className="h-12 md:h-16 w-12 md:w-16 mx-auto mb-4 opacity-50" />
+                <p className="text-base md:text-lg font-medium">No holidays found</p>
+                <p className="text-xs md:text-sm">There are no holidays scheduled for this year</p>
               </div>
             )}
           </ScrollArea>

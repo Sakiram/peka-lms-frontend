@@ -5,7 +5,7 @@ import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { Calendar, AlertCircle, CalendarPlus } from 'lucide-react';
+import { Calendar, AlertCircle, CalendarPlus, CalendarDays } from 'lucide-react';
 import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
 import { HolidaysTable } from '@/components/holidays/HolidaysTable';
 import { AddHolidayModal } from '@/components/holidays/AddHolidayModal';
@@ -14,6 +14,8 @@ import { DeleteHolidayDialog } from '@/components/holidays/DeleteHolidayDialog';
 
 export function Holidays() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const [showAllYears, setShowAllYears] = useState(false);
+  const currentYear = new Date().getFullYear();
 
   // Permission check
   if (!user || !['ADMIN', 'HR'].includes(user.role)) {
@@ -44,7 +46,7 @@ export function Holidays() {
     try {
       setLoading(true);
       setError('');
-      const data = await holidaysAPI.getAllHolidays();
+      const data = await holidaysAPI.getAllHolidays(showAllYears);
       // Sort by date
       const sorted = data.sort((a, b) => 
         new Date(a.holiday_date).getTime() - new Date(b.holiday_date).getTime()
@@ -61,7 +63,7 @@ export function Holidays() {
 
   useEffect(() => {
     loadHolidays();
-  }, []);
+  }, [showAllYears]);
 
   const handleEditClick = (holiday: Holiday) => {
     setEditingHoliday(holiday);
@@ -96,12 +98,32 @@ export function Holidays() {
         </Alert>
       )}
 
+       {/* ADD FILTER BUTTONS HERE */}
+      <div className="flex gap-2 mb-4">
+        <Button
+          variant={!showAllYears ? 'default' : 'outline'}
+          size="sm"
+          onClick={() => setShowAllYears(false)}
+        >
+          <Calendar className="h-4 w-4 mr-1" />
+          {currentYear}
+        </Button>
+        <Button
+          variant={showAllYears ? 'default' : 'outline'}
+          size="sm"
+          onClick={() => setShowAllYears(true)}
+        >
+          <CalendarDays className="h-4 w-4 mr-1" />
+          All Years
+        </Button>
+      </div>
+
       {/* Holidays Table */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            All Holidays ({holidays.length})
+            {showAllYears ? 'All Holidays' : `Holidays ${currentYear}`} ({holidays.length})
           </CardTitle>
         </CardHeader>
         <CardContent>
