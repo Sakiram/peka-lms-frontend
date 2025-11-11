@@ -6,11 +6,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Building2, AlertCircle, UserPlus } from 'lucide-react';
 import { usersAPI, type User } from '@/api/endpoints/users';
-import { UsersFilters, type FilterValues } from '@/components/ui/layout/UserFilters';
-import { UsersTable } from '@/components/ui/layout/UserTable';
-import { UsersPagination } from '@/components/ui/layout/UserPagination';
-import { EditUserModal } from '@/components/ui/layout/EditUserModal';
-import { DeleteUserDialog } from '@/components/ui/layout/DeleteUserDialog';
+import { UsersFilters, type FilterValues } from '@/components/users/UserFilters';
+import { UsersTable } from '@/components/users/UserTable';
+import { UsersPagination } from '@/components/users/UserPagination';
+import { EditUserModal } from '@/components/users/EditUserModal';
+import { DeleteUserDialog } from '@/components/users/DeleteUserDialog';
 import { InviteUserModal } from '@/components/ui/layout/InviteUserModal';
 import { Button } from '@/components/ui/shadcn/button';
 

@@ -1,32 +1,51 @@
 import { useState, useEffect } from 'react';
 
-export type ThemeVariant = 'light' | 'dark' | 'purple' | 'highcontrast';
+export type ColorScheme = 'default' | 'purple' | 'caffine';
+export type Mode = 'light' | 'dark';
 
-const THEME_KEY = 'app-theme';
+const SCHEME_KEY = 'color-scheme';
+const MODE_KEY = 'color-mode';
 
 export const useTheme = () => {
-  const [theme, setThemeState] = useState<ThemeVariant>('light');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('default');
+  const [mode, setMode] = useState<Mode>('light');
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    const savedTheme = localStorage.getItem(THEME_KEY) as ThemeVariant | null;
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const savedScheme = (localStorage.getItem(SCHEME_KEY) as ColorScheme) || 'default';
+    const savedMode = (localStorage.getItem(MODE_KEY) as Mode) || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
     
-    const initialTheme = savedTheme || systemTheme;
-    setThemeState(initialTheme as ThemeVariant);
-    applyTheme(initialTheme as ThemeVariant);
+    setColorScheme(savedScheme);
+    setMode(savedMode);
+    applyTheme(savedScheme, savedMode);
     setMounted(true);
   }, []);
-  const applyTheme = (newTheme: ThemeVariant) => {
-    const root = document.documentElement;    
-    root.classList.remove('light', 'dark', 'brand', 'highcontrast');    
-    root.classList.add(newTheme);    
-    localStorage.setItem(THEME_KEY, newTheme);
+
+  const applyTheme = (scheme: ColorScheme, themeMode: Mode) => {
+    const root = document.documentElement;
+    
+    // Remove all scheme and mode classes
+    root.classList.remove('default', 'purple', 'caffine', 'light', 'dark');
+    
+    // Apply new classes
+    root.classList.add(scheme, themeMode);
+    
+    // Save to localStorage
+    localStorage.setItem(SCHEME_KEY, scheme);
+    localStorage.setItem(MODE_KEY, themeMode);
   };
 
-  const setTheme = (newTheme: ThemeVariant) => {
-    setThemeState(newTheme);
-    applyTheme(newTheme);
+  const changeScheme = (scheme: ColorScheme) => {
+    setColorScheme(scheme);
+    applyTheme(scheme, mode);
   };
 
-  return { theme, setTheme, mounted };
+  const toggleMode = () => {
+    const newMode = mode === 'light' ? 'dark' : 'light';
+    setMode(newMode);
+    applyTheme(colorScheme, newMode);
+  };
+
+  return { colorScheme, mode, changeScheme, toggleMode, mounted };
 };

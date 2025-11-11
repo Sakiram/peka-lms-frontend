@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import type { RootState, Dispatch } from '@/store';
-import { UserProfileModal } from '@/components/ui/layout/UserProfileModal';
+import { UserProfileModal } from '@/components/users/UserProfileModal';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/shadcn/avatar';
 import { Button } from '@/components/ui/shadcn/button';
 import {
