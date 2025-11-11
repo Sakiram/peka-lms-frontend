@@ -44,19 +44,25 @@ export function Sidebar() {
         label: 'Holidays',
         path: '/holidays',
         icon: <Calendar className="h-5 w-5" />,
-        roles: ['ADMIN', 'HR'], // Only ADMIN and HR
+        roles: ['ADMIN', 'HR'],
       },
       {
         label: 'Leave Types',
         path: '/leave-types',
         icon: <FileText className="h-5 w-5" />,
-        roles: ['ADMIN', 'HR'], // Only ADMIN and HR
+        roles: ['ADMIN', 'HR'],
+      },
+      {
+        label: 'Leave Requests',
+        path: '/leave-requests',
+        icon: <FileText className="h-5 w-5" />,
+        roles: ['ADMIN', 'HR', 'MANAGER'],
       },
       {
         label: 'Organization',
         path: '/organization',
         icon: <Building2 className="h-5 w-5" />,
-        roles: ['ADMIN'], // Only ADMIN
+        roles: ['ADMIN', 'HR'],
       },
     ];
   }, []);
@@ -77,7 +83,7 @@ export function Sidebar() {
       <Button
         variant="ghost"
         size="icon"
-        className="md:hidden fixed top-4 left-4 z-50"
+        className="md:hidden fixed top-1 left-1 z-50 h-6 w-6"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <X /> : <Menu />}

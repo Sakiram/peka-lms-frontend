@@ -93,7 +93,7 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
           </div>
         ) : (
           <ScrollArea className="h-[calc(90vh-120px)]">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 p-1">
+            <div className="max-w-[600px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
               {holidays.map((holiday) => {
                 const date = new Date(holiday.holiday_date);
                 const monthIndex = date.getMonth(); // 0-11
@@ -143,9 +143,6 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
                         </div>
                       </div>
                     </div>
-
-                    {/* Floater Leave Badge (if applicable) */}
-                    {/* You can add this if your API provides floater leave info */}
                   </div>
                 );
               })}

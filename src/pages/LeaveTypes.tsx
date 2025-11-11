@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { FileText, AlertCircle, Plus } from 'lucide-react';
 import { leaveTypesAPI, type LeaveType } from '@/api/endpoints/leaveTypes';
-import { LeaveTypesTable } from '@/components/ui/leaveTypes/LeaveTypesTable';
-import { AddLeaveTypeModal } from '@/components/ui/leaveTypes/AddLeaveTypeModal';
-import { EditLeaveTypeModal } from '@/components/ui/leaveTypes/EditLeaveTypeModal';
-import { DeleteLeaveTypeDialog } from '@/components/ui/leaveTypes/DeleteLeaveTypeDialog';
+import { LeaveTypesTable } from '@/components/leaveTypes/LeaveTypesTable';
+import { AddLeaveTypeModal } from '@/components/leaveTypes/AddLeaveTypeModal';
+import { EditLeaveTypeModal } from '@/components/leaveTypes/EditLeaveTypeModal';
+import { DeleteLeaveTypeDialog } from '@/components/leaveTypes/DeleteLeaveTypeDialog';
 
 export function LeaveTypes() {
   const { user } = useSelector((state: RootState) => state.auth);

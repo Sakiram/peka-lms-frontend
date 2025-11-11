@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import type { Dispatch } from '@/store';
 import { LeaveTypes } from './pages/LeaveTypes';
+import { LeaveRequests } from '@/pages/LeaveRequests';
 
 function App() {
   const dispatch = useDispatch<Dispatch>();
@@ -39,6 +40,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Leaves />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/leave-requests"
+          element={
+            <ProtectedRoute>
+              <LeaveRequests />
             </ProtectedRoute>
           }
         />

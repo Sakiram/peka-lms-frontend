@@ -7,10 +7,10 @@ import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Calendar, AlertCircle, CalendarPlus } from 'lucide-react';
 import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
-import { HolidaysTable } from '@/components/ui/layout/HolidaysTable';
-import { AddHolidayModal } from '@/components/ui/layout/AddHolidayModal';
-import { EditHolidayModal } from '@/components/ui/layout/EditHolidayModal';
-import { DeleteHolidayDialog } from '@/components/ui/layout/DeleteHolidayDialog';
+import { HolidaysTable } from '@/components/holidays/HolidaysTable';
+import { AddHolidayModal } from '@/components/holidays/AddHolidayModal';
+import { EditHolidayModal } from '@/components/holidays/EditHolidayModal';
+import { DeleteHolidayDialog } from '@/components/holidays/DeleteHolidayDialog';
 
 export function Holidays() {
   const { user } = useSelector((state: RootState) => state.auth);

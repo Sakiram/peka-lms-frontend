@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import type { RootState, Dispatch } from '@/store';
 import { Button } from '@/components/ui/shadcn/button';
 import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
-import { PendingApprovalsCard } from '@/components/ui/dashboard/PendingApprovalsCard';
-import { UpcomingHolidaysCard } from '@/components/ui/dashboard/UpcomingHolidaysCard';
+import { PendingApprovalsCard } from '@/components/dashboard/PendingApprovalsCard';
+import { UpcomingHolidaysCard } from '@/components/dashboard/UpcomingHolidaysCard';
 import { ThemeSwitcher } from '@/components/ui/ThemeSwitcher';
 
 export function Dashboard() {
