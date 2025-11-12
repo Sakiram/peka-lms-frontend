@@ -14,6 +14,7 @@ import { leavesAPI } from '@/api/endpoints/leaves';
 
 interface LeaveActionDialogProps {
   leaveId: string | null;
+  leaveType: string;
   action: 'approve' | 'reject' | null;
   open: boolean;
   onClose: () => void;
@@ -22,6 +23,7 @@ interface LeaveActionDialogProps {
 
 export function LeaveActionDialog({
   leaveId,
+  leaveType,
   action,
   open,
   onClose,
@@ -38,9 +40,9 @@ export function LeaveActionDialog({
 
     try {
       if (action === 'approve') {
-        await leavesAPI.approveLeave(leaveId);
+        await leavesAPI.approveLeave(leaveId, leaveType);
       } else {
-        await leavesAPI.rejectLeave(leaveId);
+        await leavesAPI.rejectLeave(leaveId, leaveType);
       }
       onSuccess();
       onClose();

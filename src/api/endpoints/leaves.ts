@@ -56,6 +56,7 @@ export interface LeaveLogsResponse {
 
 export interface ApplyLeavePayload {
   leave_type_id: string;
+  leave_type_name?: string;
   start_date: string;
   end_date: string;
   total_days: number;
@@ -153,13 +154,13 @@ export const leavesAPI = {
     return data;
   },
 
-  approveLeave: async (leaveId: string) => {
-    const { data } = await apiClient.put(`/leaves/${leaveId}/approve`);
+  approveLeave: async (leaveId: string, leaveType: string) => {
+    const { data } = await apiClient.put(`/leaves/${leaveId}/approve`, { leaveType });
     return data;
   },
 
-  rejectLeave: async (leaveId: string) => {
-    const { data } = await apiClient.put(`/leaves/${leaveId}/reject`);
+  rejectLeave: async (leaveId: string, leaveType: string) => {
+    const { data } = await apiClient.put(`/leaves/${leaveId}/reject`, { leaveType });
     return data;
   },
 };

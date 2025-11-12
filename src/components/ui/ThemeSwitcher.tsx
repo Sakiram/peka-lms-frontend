@@ -8,7 +8,6 @@ export function ThemeSwitcher() {
 
   return (
     <div className="flex items-center gap-2">
-      {/* Color Scheme Selector */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
@@ -37,7 +36,6 @@ export function ThemeSwitcher() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Light/Dark Mode Toggle */}
       <Button variant="outline" size="icon" onClick={toggleMode}>
         {mode === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
       </Button>

@@ -56,7 +56,6 @@ export function InviteUserModal({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!formData.email) {
       setError('Email is required');
       return;
@@ -67,7 +66,6 @@ export function InviteUserModal({
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setError('Please enter a valid email address');
@@ -84,7 +82,6 @@ export function InviteUserModal({
         reporting_to: formData.reporting_to || null,
       });
 
-      // Reset form
       setFormData({
         email: '',
         role: '',
@@ -126,7 +123,6 @@ export function InviteUserModal({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email">
               Email <span className="text-destructive">*</span>
@@ -142,7 +138,6 @@ export function InviteUserModal({
             />
           </div>
 
-          {/* Role */}
           <div className="space-y-2">
             <Label htmlFor="role">
               Role <span className="text-destructive">*</span>
@@ -165,7 +160,6 @@ export function InviteUserModal({
             </Select>
           </div>
 
-          {/* Manager */}
           <div className="space-y-2">
             <Label htmlFor="manager">Manager (Optional)</Label>
             <Select
@@ -189,7 +183,6 @@ export function InviteUserModal({
             </Select>
           </div>
 
-          {/* Error */}
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -197,7 +190,6 @@ export function InviteUserModal({
             </Alert>
           )}
 
-          {/* Actions */}
           <div className="flex gap-2 justify-end pt-4">
             <Button
               type="button"

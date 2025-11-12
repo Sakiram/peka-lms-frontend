@@ -51,7 +51,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Load leave types
   useEffect(() => {
     if (open) {
       loadLeaveTypes();
@@ -68,7 +67,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
     }
   };
 
-  // Calculate total days when dates or half_day settings change
   useEffect(() => {
     if (formData.start_date && formData.end_date) {
       calculateTotalDays();
@@ -117,8 +115,8 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
         setFormData(prev => ({ 
         ...prev, 
         half_day: true,
-        start_half: 'first',   // Default first half for start
-        end_half: 'second'     // Default second half for end
+        start_half: 'first',
+        end_half: 'second'
         }));
     } else {
         setFormData(prev => ({ 
@@ -134,7 +132,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file size (50MB)
     const maxSize = 50 * 1024 * 1024;
     if (file.size > maxSize) {
       setError('File size must be less than 50MB');
@@ -144,7 +141,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
     setUploadedFile(file);
     setError('');
 
-    // Auto-upload file
     try {
       setUploading(true);
       const response = await leavesAPI.uploadProof(file);
@@ -165,7 +161,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
     if (!formData.leave_type_id) {
       setError('Please select a leave type');
       return;
@@ -181,13 +176,11 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
       return;
     }
 
-    // Check if attachment is required
     if (selectedLeaveType?.requires_document && !formData.attachment_url) {
       setError('Attachment is required for this leave type');
       return;
     }
 
-    // Validate dates
     const start = parseISO(formData.start_date);
     const end = parseISO(formData.end_date);
     if (end < start) {
@@ -206,6 +199,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
     try {
       await leavesAPI.applyLeave({
         leave_type_id: formData.leave_type_id,
+        leave_type_name: selectedLeaveType?.name || '',
         start_date: formData.start_date,
         end_date: formData.end_date,
         total_days: formData.total_days,
@@ -214,7 +208,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
         attachment_url: formData.attachment_url || undefined,
       });
 
-      // Reset form
       setFormData({
         leave_type_id: '',
         start_date: '',
@@ -276,7 +269,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Leave Type */}
           <div className="space-y-2">
             <Label htmlFor="leave_type">
               Leave Type <span className="text-destructive">*</span>
@@ -299,9 +291,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             </Select>
           </div>
 
-          {/* Dates Row */}
           <div className="grid grid-cols-3 gap-4">
-            {/* Start Date */}
             <div className="space-y-2">
               <Label htmlFor="start_date">
                 Start Date <span className="text-destructive">*</span>
@@ -316,7 +306,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
               />
             </div>
 
-            {/* Total Days (Read-only) */}
             <div className="space-y-2">
               <Label htmlFor="total_days">Total Days</Label>
               <Input
@@ -329,7 +318,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
               />
             </div>
 
-            {/* End Date */}
             <div className="space-y-2">
               <Label htmlFor="end_date">
                 End Date <span className="text-destructive">*</span>
@@ -346,7 +334,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             </div>
           </div>
 
-          {/* Half Day Checkbox */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="half_day"
@@ -359,10 +346,8 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             </Label>
           </div>
 
-          {/* Half Day Options - Show when enabled */}
             {formData.half_day && (
             <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
-                {/* Start Date Half */}
                 <div className="space-y-2">
                 <Label htmlFor="start_half">
                     Start Date ({isSingleDay ? 'Only day' : 'First day'})
@@ -382,7 +367,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
                 </Select>
                 </div>
 
-                {/* End Date Half - Only show for multiple days */}
                 {!isSingleDay && (
                 <div className="space-y-2">
                     <Label htmlFor="end_half">End Date (Last day)</Label>
@@ -404,7 +388,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             </div>
             )}         
 
-          {/* Reason */}
           <div className="space-y-2">
             <Label htmlFor="reason">
               Reason <span className="text-destructive">*</span>
@@ -420,7 +403,6 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             />
           </div>
 
-          {/* Attachment Upload */}
           <div className="space-y-2">
             <Label htmlFor="attachment">
               Attachment {selectedLeaveType?.requires_document && <span className="text-destructive">*</span>}

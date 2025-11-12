@@ -30,7 +30,6 @@ export function LeaveBalanceCard({ balance }: LeaveBalanceCardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        {/* Donut Chart */}
         <div className="flex justify-center relative">
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
@@ -53,20 +52,17 @@ export function LeaveBalanceCard({ balance }: LeaveBalanceCardProps) {
                   backgroundColor: 'var(--input)',
                   border: '1px solid var(--input)',
                   borderRadius: '6px',
-                  opacity: 1,
                 }}
               />
             </PieChart>
           </ResponsiveContainer>
           
-          {/* Center text overlay */}
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <div className="text-4xl font-bold">{balance.remaining}</div>
             <div className="text-sm text-muted-foreground">Available</div>
           </div>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-3 gap-2 text-center pt-2">
           <div className="space-y-1">
             <div className="text-2xl font-bold">{balance.allocated}</div>

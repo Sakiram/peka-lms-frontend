@@ -42,6 +42,7 @@ export function LeaveRequests() {
   // Action dialog state
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
   const [selectedLeaveId, setSelectedLeaveId] = useState<string | null>(null);
+  const [selectedUsername, setSelectedUsername] = useState<string>('');
   const [selectedAction, setSelectedAction] = useState<'approve' | 'reject' | null>(null);
 
   useEffect(() => {
@@ -73,14 +74,16 @@ export function LeaveRequests() {
     }
   };
 
-  const handleApprove = (leaveId: string) => {
+  const handleApprove = (leaveId: string, leaveType: string) => {
     setSelectedLeaveId(leaveId);
+    setSelectedUsername(leaveType);
     setSelectedAction('approve');
     setActionDialogOpen(true);
   };
 
-  const handleReject = (leaveId: string) => {
+  const handleReject = (leaveId: string, leaveType: string) => {
     setSelectedLeaveId(leaveId);
+    setSelectedUsername(leaveType);
     setSelectedAction('reject');
     setActionDialogOpen(true);
   };
@@ -154,6 +157,7 @@ export function LeaveRequests() {
       {/* Action Confirmation Dialog */}
       <LeaveActionDialog
         leaveId={selectedLeaveId}
+        leaveType={selectedUsername}
         action={selectedAction}
         open={actionDialogOpen}
         onClose={() => {

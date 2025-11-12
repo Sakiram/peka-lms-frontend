@@ -15,8 +15,8 @@ import { format } from 'date-fns';
 interface LeaveRequestsTableProps {
   requests: LeaveRequest[];
   isLoading: boolean;
-  onApprove: (leaveId: string) => void;
-  onReject: (leaveId: string) => void;
+  onApprove: (leaveId: string, leaveType: string) => void;
+  onReject: (leaveId: string, leaveType: string) => void;
 }
 
 export function LeaveRequestsTable({
@@ -129,7 +129,7 @@ export function LeaveRequestsTable({
                     <Button
                       variant="default"
                       size="sm"
-                      onClick={() => onApprove(request.id)}
+                      onClick={() => onApprove(request.id, request.leave_types.name)}
                     >
                       <CheckCircle className="h-4 w-4 mr-1" />
                       Approve
@@ -137,7 +137,7 @@ export function LeaveRequestsTable({
                     <Button
                       variant="destructive"
                       size="sm"
-                      onClick={() => onReject(request.id)}
+                      onClick={() => onReject(request.id, request.leave_types.name)}
                     >
                       <XCircle className="h-4 w-4 mr-1" />
                       Reject

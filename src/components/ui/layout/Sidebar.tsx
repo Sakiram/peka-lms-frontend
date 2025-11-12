@@ -13,6 +13,8 @@ import {
   Menu,
   X,
   LogOut,
+  FileCheck,
+  FilePlus2,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -20,7 +22,7 @@ interface MenuItem {
   label: string;
   path: string;
   icon: React.ReactNode;
-  roles: string[]; // Which roles can see this
+  roles: string[];
 }
 
 export function Sidebar() {
@@ -38,13 +40,13 @@ export function Sidebar() {
         label: 'Dashboard',
         path: '/dashboard',
         icon: <LayoutDashboard className="h-5 w-5" />,
-        roles: ['ADMIN', 'HR', 'EMPLOYEE', 'MANAGER'], // All roles
+        roles: ['ADMIN', 'HR', 'EMPLOYEE', 'MANAGER'],
       },
       {
         label: 'Leaves',
         path: '/leaves',
         icon: <FileText className="h-5 w-5" />,
-        roles: ['ADMIN', 'HR', 'EMPLOYEE', 'MANAGER'], // All roles
+        roles: ['ADMIN', 'HR', 'EMPLOYEE', 'MANAGER'],
       },
       {
         label: 'Holidays',
@@ -55,13 +57,13 @@ export function Sidebar() {
       {
         label: 'Leave Types',
         path: '/leave-types',
-        icon: <FileText className="h-5 w-5" />,
+        icon: <FilePlus2 className="h-5 w-5" />,
         roles: ['ADMIN', 'HR'],
       },
       {
         label: 'Leave Requests',
         path: '/leave-requests',
-        icon: <FileText className="h-5 w-5" />,
+        icon: <FileCheck className="h-5 w-5" />,
         roles: ['ADMIN', 'HR', 'MANAGER'],
       },
       {
@@ -73,7 +75,6 @@ export function Sidebar() {
     ];
   }, []);
 
-  // Filter menu items based on user role
   const visibleMenuItems = useMemo(() => {
     if (!user) return [];
     return menuItems.filter((item) => item.roles.includes(user.role));
@@ -90,7 +91,6 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Toggle Button */}
       <Button
         variant="ghost"
         size="icon"
