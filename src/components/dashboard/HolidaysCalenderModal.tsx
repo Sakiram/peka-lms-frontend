@@ -110,12 +110,10 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
                     key={holiday.id}
                     className={`rounded-lg border-2 overflow-hidden shadow-sm hover:shadow-md transition-shadow ${getMonthColor(monthIndex)}`}
                   >
-                    {/* Month Header */}
                     <div className={`text-center font-bold py-1.5 md:py-2 text-xs md:text-sm ${getMonthHeaderColor(monthIndex)}`}>
                       {monthName.toUpperCase()}
                     </div>
 
-                    {/* Date Display */}
                     <div className="p-2 md:p-3 lg:p-4">
                       <div className="text-center mb-2 md:mb-3">
                         <div className="text-3xl md:text-4xl lg:text-5xl font-bold leading-none mb-1">
@@ -126,13 +124,11 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
                         </div>
                       </div>
 
-                      {/* Holiday Name */}
                       <div className="text-center">
                         <p className="font-semibold text-xs md:text-sm leading-tight mb-1.5 md:mb-2 line-clamp-2">
                           {holiday.name}
                         </p>
                         
-                        {/* Badges */}
                         <div className="flex flex-wrap gap-1 justify-center">
                           {holiday.recurring && (
                             <Badge variant="outline" className="text-[10px] md:text-xs px-1 py-0">

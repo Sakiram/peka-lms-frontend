@@ -49,8 +49,6 @@ export function LeaveRequestsTable({
         return 'default';
       case 'REJECTED':
         return 'destructive';
-      case 'CANCELLED':
-        return 'outline';
       default:
         return 'outline';
     }
@@ -147,7 +145,6 @@ export function LeaveRequestsTable({
                   <div className="text-sm text-muted-foreground">
                     {request.status === 'APPROVED' && 'Approved'}
                     {request.status === 'REJECTED' && 'Rejected'}
-                    {request.status === 'CANCELLED' && 'Cancelled'}
                     {request.reviewed_on && (
                       <div className="text-xs">
                         {format(new Date(request.reviewed_on), 'MMM dd, yyyy')}

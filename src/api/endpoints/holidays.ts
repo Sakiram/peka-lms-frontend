@@ -17,19 +17,17 @@ export const holidaysAPI = {
     const { data } = await apiClient.get<Holiday[]>(url);
     return data;
   },
-  // Create holiday
+
   createHoliday: async (payload: CreateHolidayPayload) => {
     const { data } = await apiClient.post('/holidays', payload);
     return data;
   },
 
-  // Update holiday
   updateHoliday: async (id: string, payload: UpdateHolidayPayload) => {
     const { data } = await apiClient.put(`/holidays/${id}`, payload);
     return data;
   },
 
-  // Delete holiday
   deleteHoliday: async (id: string) => {
     const { data } = await apiClient.delete(`/holidays/${id}`);
     return data;

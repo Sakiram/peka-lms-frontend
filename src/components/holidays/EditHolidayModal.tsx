@@ -107,7 +107,6 @@ export function EditHolidayModal({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">
               Holiday Name <span className="text-destructive">*</span>
@@ -122,7 +121,6 @@ export function EditHolidayModal({
             />
           </div>
 
-          {/* Date */}
           <div className="space-y-2">
             <Label htmlFor="holiday_date">
               Date <span className="text-destructive">*</span>
@@ -137,7 +135,6 @@ export function EditHolidayModal({
             />
           </div>
 
-          {/* Recurring */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="recurring"
@@ -150,7 +147,6 @@ export function EditHolidayModal({
             </Label>
           </div>
 
-          {/* Error */}
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -158,7 +154,6 @@ export function EditHolidayModal({
             </Alert>
           )}
 
-          {/* Actions */}
           <div className="flex gap-2 justify-end pt-4">
             <Button
               type="button"

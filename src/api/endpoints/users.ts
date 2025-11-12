@@ -4,7 +4,6 @@ import type { UpdateUserPayload, User, UserFilters, UsersResponse, UploadPicResp
 export const usersAPI = {
   getUsers: async (filters: UserFilters = {}): Promise<UsersResponse> => {
     const params = new URLSearchParams();
-    
     if (filters.page) params.append('page', filters.page.toString());
     if (filters.limit) params.append('limit', filters.limit.toString());
     if (filters.role) params.append('role', filters.role);
@@ -29,7 +28,6 @@ export const usersAPI = {
     return [...managers];
   },
 
-  // Update user
   updateUser: async (userId: string, payload: UpdateUserPayload) => {
     const { data } = await apiClient.put(
       `/users/profile/${userId}`,

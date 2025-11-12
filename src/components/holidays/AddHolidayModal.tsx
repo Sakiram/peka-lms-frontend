@@ -102,7 +102,6 @@ export function AddHolidayModal({ open, onClose, onSuccess }: AddHolidayModalPro
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">
               Holiday Name <span className="text-destructive">*</span>
@@ -118,7 +117,6 @@ export function AddHolidayModal({ open, onClose, onSuccess }: AddHolidayModalPro
             />
           </div>
 
-          {/* Date */}
           <div className="space-y-2">
             <Label htmlFor="holiday_date">
               Date <span className="text-destructive">*</span>
@@ -133,7 +131,6 @@ export function AddHolidayModal({ open, onClose, onSuccess }: AddHolidayModalPro
             />
           </div>
 
-          {/* Recurring */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="recurring"
