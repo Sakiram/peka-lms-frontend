@@ -7,6 +7,7 @@ import { holidaysAPI } from '@/api/endpoints/holidays';
 import type { Holiday } from '@/types/holidays';
 import { format, differenceInDays, startOfDay } from 'date-fns';
 import { HolidaysCalendarModal } from './HolidaysCalenderModal';
+import * as _ from "@/constants/en.json";
 
 export function UpcomingHolidaysCard() {
   const [holidays, setHolidays] = useState<Holiday[]>([]);
@@ -43,7 +44,7 @@ export function UpcomingHolidaysCard() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Upcoming Holidays
+            {_.holidays.upcoming} {_.holidays.holidays}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -63,17 +64,17 @@ export function UpcomingHolidaysCard() {
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Upcoming Holidays
+            {_.holidays.upcoming} {_.holidays.holidays}
           </CardTitle>
           <Button variant="ghost" size="sm" onClick={() => setShowModal(true)}>
-            View All
+            {_.leaves.viewAll}
           </Button>
         </CardHeader>
         <CardContent>
           {holidays.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
               <PartyPopper className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No upcoming holidays in the next 30 days</p>
+              <p>{_.holidays.noUpcomingHolidays}</p>
             </div>
           ) : (
             <div className="space-y-3">

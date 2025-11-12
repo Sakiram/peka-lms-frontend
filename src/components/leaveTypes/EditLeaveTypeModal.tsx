@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/shadcn/textarea';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle, Edit } from 'lucide-react';
 import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
+import * as _ from '@/constants/en.json';
 
 interface EditLeaveTypeModalProps {
   leaveType: LeaveType | null;
@@ -106,10 +107,10 @@ export function EditLeaveTypeModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Edit className="h-5 w-5" />
-            Edit Leave Type
+            {_.leaves.edit}
           </DialogTitle>
           <DialogDescription>
-            Update leave type information
+            {_.leaves.editDescription}
           </DialogDescription>
         </DialogHeader>
 
@@ -117,7 +118,7 @@ export function EditLeaveTypeModal({
           {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">
-              Name <span className="text-destructive">*</span>
+              {_.name} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="name"
@@ -131,7 +132,7 @@ export function EditLeaveTypeModal({
 
           {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description">{_.description}</Label>
             <Textarea
               id="description"
               value={formData.description}
@@ -166,7 +167,7 @@ export function EditLeaveTypeModal({
               disabled={loading}
             />
             <Label htmlFor="requires_document" className="text-sm font-medium">
-              Requires supporting document
+              {_.leaves.docRequired}
             </Label>
           </div>
 
@@ -179,7 +180,7 @@ export function EditLeaveTypeModal({
               disabled={loading}
             />
             <Label htmlFor="carry_forward" className="text-sm font-medium">
-              Can carry forward to next year
+              {_.leaves.canCarryForward}
             </Label>
           </div>
 
@@ -199,7 +200,7 @@ export function EditLeaveTypeModal({
               onClick={onClose}
               disabled={loading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'}

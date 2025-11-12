@@ -9,6 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/shadcn/select';
 import { Search, X, Loader } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface UsersFiltersProps {
   onFiltersChange: (filters: FilterValues) => void;
@@ -93,11 +94,11 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
             <SelectValue placeholder="All Roles" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all-roles">All Roles</SelectItem>
-            <SelectItem value="ADMIN">Admin</SelectItem>
-            <SelectItem value="HR">HR</SelectItem>
-            <SelectItem value="MANAGER">Manager</SelectItem>
-            <SelectItem value="EMPLOYEE">Employee</SelectItem>
+            <SelectItem value="all-roles">{_.roles[4]}</SelectItem>
+            <SelectItem value="ADMIN">{_.roles[3]}</SelectItem>
+            <SelectItem value="HR">{_.roles[2]}</SelectItem>
+            <SelectItem value="MANAGER">{_.roles[1]}</SelectItem>
+            <SelectItem value="EMPLOYEE">{_.roles[0]}</SelectItem>
           </SelectContent>
         </Select>
 
@@ -112,9 +113,9 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
             <SelectValue placeholder="All Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all-status">All Status</SelectItem>
-            <SelectItem value="ACTIVE">Active</SelectItem>
-            <SelectItem value="INACTIVE">Inactive</SelectItem>
+            <SelectItem value="all-status">{_.allStatus}</SelectItem>
+            <SelectItem value="ACTIVE">{_.active}</SelectItem>
+            <SelectItem value="INACTIVE">{_.inactive}</SelectItem>
           </SelectContent>
         </Select>
 
@@ -127,7 +128,7 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
           className="ml-auto w-fit"
         >
           <X className="h-4 w-4 mr-1" />
-          Reset
+          {_.reset}
         </Button>
       </div>
     </div>

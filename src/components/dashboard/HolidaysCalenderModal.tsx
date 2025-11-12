@@ -11,6 +11,7 @@ import { Calendar } from 'lucide-react';
 import { holidaysAPI } from '@/api/endpoints/holidays';
 import type { Holiday } from '@/types/holidays';
 import { format } from 'date-fns';
+import * as _ from "@/constants/en.json";
 
 interface HolidaysCalendarModalProps {
   open: boolean;
@@ -87,7 +88,7 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl md:text-2xl">
             <Calendar className="h-5 w-5 md:h-6 md:w-6" />
-            Holidays {selectedYear}
+            {_.holidays.holidays} {selectedYear}
           </DialogTitle>
         </DialogHeader>
 
@@ -132,12 +133,12 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
                         <div className="flex flex-wrap gap-1 justify-center">
                           {holiday.recurring && (
                             <Badge variant="outline" className="text-[10px] md:text-xs px-1 py-0">
-                              Recurring
+                              {_.holidays.recurring}
                             </Badge>
                           )}
                           {holiday.is_upcoming && (
                             <Badge variant="secondary" className="text-[10px] md:text-xs px-1 py-0">
-                              Upcoming
+                              {_.holidays.upcoming}
                             </Badge>
                           )}
                         </div>
@@ -151,8 +152,8 @@ export function HolidaysCalendarModal({ open, onClose }: HolidaysCalendarModalPr
             {holidays.length === 0 && (
               <div className="text-center py-12 text-muted-foreground">
                 <Calendar className="h-12 md:h-16 w-12 md:w-16 mx-auto mb-4 opacity-50" />
-                <p className="text-base md:text-lg font-medium">No holidays found</p>
-                <p className="text-xs md:text-sm">There are no holidays scheduled for this year</p>
+                <p className="text-base md:text-lg font-medium">{_.holidays.noHolidays}</p>
+                <p className="text-xs md:text-sm">{_.holidays.noHolidaysTxt}</p>
               </div>
             )}
           </ScrollArea>

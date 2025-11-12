@@ -10,6 +10,7 @@ import { ApplyLeaveModal } from '@/components/leaves/ApplyLeaveModal';
 import { LeaveBalanceCard } from '@/components/leaves/LeaveBalanceCard';
 import { LeavesTable } from '@/components/leaves/LeavesTable';
 import { LeaveLogsModal } from '@/components/leaves/LeaveLogsModal';
+import * as _ from '@/constants/en.json';
 
 export function Leaves() {
   const [applyModalOpen, setApplyModalOpen] = useState(false);
@@ -61,12 +62,12 @@ export function Leaves() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Leaves</h1>
-          <p className="text-muted-foreground">Manage your leave requests</p>
+          <h1 className="text-3xl font-bold">{_.leaves.name}</h1>
+          <p className="text-muted-foreground">{_.leaves.description}</p>
         </div>
         <Button onClick={() => setApplyModalOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Apply Leave
+          {_.leaves.applyLeave}
         </Button>
       </div>
 
@@ -81,7 +82,7 @@ export function Leaves() {
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
-          Leave Balance
+          {_.leaves.Balance}
         </h2>
         
         {loading ? (
@@ -99,7 +100,7 @@ export function Leaves() {
         {!loading && leaveBalances.length === 0 && (
           <Card>
             <CardContent className="text-center py-12 text-muted-foreground">
-              <p>No leave balance information available</p>
+              <p>{_.leaves.description3}</p>
             </CardContent>
           </Card>
         )}
@@ -110,7 +111,7 @@ export function Leaves() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Leave History
+            {_.leaves.History}
           </CardTitle>
         </CardHeader>
         <CardContent>

@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Edit2, Trash2, CheckCircle, XCircle } from 'lucide-react';
 import { format } from 'date-fns';
+import * as _ from '@/constants/en.json';
 
 interface HolidaysTableProps {
   holidays: Holiday[];
@@ -36,7 +37,7 @@ export function HolidaysTable({
   if (holidays.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p>No holidays found</p>
+        <p>{_.holidays.noHolidays}</p>
       </div>
     );
   }
@@ -46,9 +47,9 @@ export function HolidaysTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Holiday Name</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Recurring</TableHead>
+            <TableHead>{_.holidays.name}</TableHead>
+            <TableHead>{_.date}</TableHead>
+            <TableHead>{_.holidays.recurring}</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>

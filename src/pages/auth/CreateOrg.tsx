@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { orgAPI } from '@/api/endpoints/org';
 import type { CreateOrgRequest } from '@/types/org';
 import type { OrgSignupStep1, OrgSignupStep2 } from '@/types';
+import * as _ from '@/constants/en.json';
 
 export const OrgSignup = () => {
   const navigate = useNavigate();
@@ -73,7 +74,7 @@ export const OrgSignup = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create Organization</CardTitle>
+          <CardTitle className="text-2xl font-bold">{_.login.create_org}</CardTitle>
           <CardDescription>
             Step {currentStep} of 2: {currentStep === 1 ? 'Organization Details' : 'Admin User Details'}
           </CardDescription>
@@ -87,7 +88,7 @@ export const OrgSignup = () => {
           {currentStep === 1 ? (
             <form onSubmit={handleNext} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="org_name">Organization Name</Label>
+                <Label htmlFor="org_name">{_.login.org_name}</Label>
                 <Input
                   id="org_name"
                   name="org_name"
@@ -100,7 +101,7 @@ export const OrgSignup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="domain">Domain</Label>
+                <Label htmlFor="domain">{_.login.domain}</Label>
                 <Input
                   id="domain"
                   name="domain"
@@ -113,7 +114,7 @@ export const OrgSignup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="org_email">Organization Email</Label>
+                <Label htmlFor="org_email">{_.login.org_email}</Label>
                 <Input
                   id="org_email"
                   name="org_email"
@@ -126,7 +127,7 @@ export const OrgSignup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">{_.login.password}</Label>
                 <Input
                   id="password"
                   name="password"
@@ -140,20 +141,20 @@ export const OrgSignup = () => {
               </div>
 
               <Button type="submit" className="w-full">
-                Next
+                {_.next}
               </Button>
 
               <div className="text-center text-sm">
-                Already have an account?{' '}
+                {_.login.alreadyMember}{' '}
                 <Link to="/login" className="text-primary hover:underline">
-                  Login
+                  {_.login.login}
                 </Link>
               </div>
             </form>
           ) : (
             <form onSubmit={handleSignup} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="firstname">First Name</Label>
+                <Label htmlFor="firstname">{_.users.firstName}</Label>
                 <Input
                   id="firstname"
                   name="firstname"
@@ -167,7 +168,7 @@ export const OrgSignup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="lastname">Last Name</Label>
+                <Label htmlFor="lastname">{_.users.lastName}</Label>
                 <Input
                   id="lastname"
                   name="lastname"
@@ -181,7 +182,7 @@ export const OrgSignup = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username">{_.users.username}</Label>
                 <Input
                   id="username"
                   name="username"
@@ -208,7 +209,7 @@ export const OrgSignup = () => {
                   disabled={loading}
                   className="flex-1"
                 >
-                  Back
+                  {_.back}
                 </Button>
                 <Button type="submit" disabled={loading} className="flex-1">
                   {loading ? 'Creating...' : 'Sign Up'}

@@ -20,6 +20,7 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle } from 'lucide-react';
 import { usersAPI } from '@/api/endpoints/users';
+import * as _ from '@/constants/en.json';
 
 interface EditUserModalProps {
   user: User | null;
@@ -49,7 +50,6 @@ export function EditUserModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Initialize form with user data
   useEffect(() => {
     if (user && open) {
       const initialData = {
@@ -76,7 +76,6 @@ export function EditUserModal({
 
     if (!user) return;
 
-    // Only send changed fields
     const payload: UpdateUserPayload = {};
 
     if (formData.email !== originalData.email) {
@@ -92,7 +91,6 @@ export function EditUserModal({
       payload.manager_id = formData.manager_id || null;
     }
 
-    // Check if anything changed
     if (Object.keys(payload).length === 0) {
       setError('No changes made');
       return;
@@ -120,16 +118,16 @@ export function EditUserModal({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-md">
         <DialogHeader>
-          <DialogTitle>Edit User</DialogTitle>
+          <DialogTitle>{_.users.edit}</DialogTitle>
           <DialogDescription>
-            Update user information. Only changed fields will be saved.
+            {_.users.editDescription}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email */}
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{_.email}</Label>
             <Input
               id="email"
               type="email"
@@ -139,9 +137,8 @@ export function EditUserModal({
             />
           </div>
 
-          {/* Role */}
           <div className="space-y-2">
-            <Label htmlFor="role">Role</Label>
+            <Label htmlFor="role">{_.role}</Label>
             <Select
               value={formData.role}
               onValueChange={(value) => handleChange('role', value)}
@@ -151,17 +148,16 @@ export function EditUserModal({
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ADMIN">Admin</SelectItem>
-                <SelectItem value="HR">HR</SelectItem>
-                <SelectItem value="MANAGER">Manager</SelectItem>
-                <SelectItem value="EMPLOYEE">Employee</SelectItem>
+                <SelectItem value="ADMIN">{_.roles[3]}</SelectItem>
+                <SelectItem value="HR">{_.roles[2]}</SelectItem>
+                <SelectItem value="MANAGER">{_.roles[1]}</SelectItem>
+                <SelectItem value="EMPLOYEE">{_.roles[0]}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* Status */}
           <div className="space-y-2">
-            <Label htmlFor="status">Status</Label>
+            <Label htmlFor="status">{_.status}</Label>
             <Select
               value={formData.status}
               onValueChange={(value) => handleChange('status', value)}
@@ -171,15 +167,14 @@ export function EditUserModal({
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ACTIVE">Active</SelectItem>
-                <SelectItem value="INACTIVE">Inactive</SelectItem>
+                <SelectItem value="ACTIVE">{_.active}</SelectItem>
+                <SelectItem value="INACTIVE">{_.inactive}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          {/* Manager */}
           <div className="space-y-2">
-            <Label htmlFor="manager">Manager</Label>
+            <Label htmlFor="manager">{_.users.Manager}</Label>
             <Select
               value={formData.manager_id}
               onValueChange={(value) => handleChange('manager_id', value)}
@@ -189,7 +184,7 @@ export function EditUserModal({
                 <SelectValue placeholder="Select manager" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">No Manager</SelectItem>
+                <SelectItem value="none">{_.users.noManger}</SelectItem>
                 {managers.map((manager) => (
                   <SelectItem key={manager.id} value={manager.id}>
                     {manager.username}
@@ -199,7 +194,6 @@ export function EditUserModal({
             </Select>
           </div>
 
-          {/* Error */}
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -207,7 +201,6 @@ export function EditUserModal({
             </Alert>
           )}
 
-          {/* Actions */}
           <div className="flex gap-2 justify-end">
             <Button
               type="button"
@@ -215,7 +208,7 @@ export function EditUserModal({
               onClick={onClose}
               disabled={loading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'}

@@ -14,6 +14,7 @@ import { EditUserModal } from '@/components/users/EditUserModal';
 import { DeleteUserDialog } from '@/components/users/DeleteUserDialog';
 import { InviteUserModal } from '@/components/ui/layout/InviteUserModal';
 import { Button } from '@/components/ui/shadcn/button';
+import * as _ from '@/constants/en.json';
 
 export function Organization() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -24,7 +25,7 @@ export function Organization() {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            Only admins can access this page.
+            {_.users.noPermission}
           </AlertDescription>
         </Alert>
       </DashboardLayout>
@@ -139,14 +140,14 @@ export function Organization() {
       {/* Header with Invite Button */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Organization</h1>
+          <h1 className="text-3xl font-bold">{_.organization}</h1>
           <p className="text-muted-foreground">
-            Manage employees and organizational settings
+            {_.users.description1}
           </p>
         </div>
         <Button onClick={() => setInviteModalOpen(true)}>
           <UserPlus className="h-4 w-4 mr-2" />
-          Invite User
+          {_.users.invite}
         </Button>
       </div>
 
@@ -161,7 +162,7 @@ export function Organization() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5" />
-            Employees ({total})
+            {_.employees} ({total})
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -200,8 +201,8 @@ export function Organization() {
           {!loading && users.length === 0 && !error && (
             <div className="text-center py-12 text-muted-foreground">
               <Building2 className="h-12 w-12 mx-auto mb-4 opacity-50" />
-              <p className="text-lg font-medium">No employees found</p>
-              <p className="text-sm">Try adjusting your filters or search</p>
+              <p className="text-lg font-medium">{_.noEmployees}</p>
+              <p className="text-sm">{_.noEmployeesDescription}</p>
             </div>
           )}
         </CardContent>

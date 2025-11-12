@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Edit2, Trash2, ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 import { format } from 'date-fns';
+import * as _ from '@/constants/en.json';
 
 interface UsersTableProps {
   users: User[];
@@ -66,7 +67,7 @@ export function UsersTable({
   if (users.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground w-full">
-        <p>No users found</p>
+        <p>{_.users.noUser}</p>
       </div>
     );
   }
@@ -99,13 +100,13 @@ export function UsersTable({
             <TableHead className="whitespace-nowrap">
               <SortButton field="first_name" label="Firstname" />
             </TableHead>
-            <TableHead className="whitespace-nowrap">Role</TableHead>
-            <TableHead className="whitespace-nowrap">Status</TableHead>
+            <TableHead className="whitespace-nowrap">{_.role}</TableHead>
+            <TableHead className="whitespace-nowrap">{_.status}</TableHead>
             <TableHead className="whitespace-nowrap">
               <SortButton field="join_date" label="Join Date" />
             </TableHead>
-            <TableHead className="whitespace-nowrap">Manager</TableHead>
-            <TableHead className="whitespace-nowrap text-right">Actions</TableHead>
+            <TableHead className="whitespace-nowrap">{_.users.Manager}</TableHead>
+            <TableHead className="whitespace-nowrap text-right">{_.action}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -118,7 +119,7 @@ export function UsersTable({
                   {user.username}
                   {isCurrentUser && (
                     <Badge variant="secondary" className="ml-2 text-xs">
-                      You
+                      {_.you}
                     </Badge>
                   )}
                 </TableCell>

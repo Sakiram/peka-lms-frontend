@@ -2,6 +2,7 @@ import type { LeaveBalance } from '@/types/leaves';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Calendar } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import * as _ from "@/constants/en.json";
 
 interface LeaveBalanceCardProps {
   balance: LeaveBalance;
@@ -59,22 +60,22 @@ export function LeaveBalanceCard({ balance }: LeaveBalanceCardProps) {
           
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
             <div className="text-4xl font-bold">{balance.remaining}</div>
-            <div className="text-sm text-muted-foreground">Available</div>
+            <div className="text-sm text-muted-foreground">{_.available}</div>
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-2 text-center pt-2">
           <div className="space-y-1">
             <div className="text-2xl font-bold">{balance.allocated}</div>
-            <div className="text-xs text-muted-foreground">Allocated</div>
+            <div className="text-xs text-muted-foreground">{_.allocated}</div>
           </div>
           <div className="space-y-1">
             <div className="text-2xl font-bold text-destructive">{balance.used}</div>
-            <div className="text-xs text-muted-foreground">Used</div>
+            <div className="text-xs text-muted-foreground">{_.used}</div>
           </div>
           <div className="space-y-1">
             <div className="text-2xl font-bold text-primary">{balance.remaining}</div>
-            <div className="text-xs text-muted-foreground">Remaining</div>
+            <div className="text-xs text-muted-foreground">{_.remaining}</div>
           </div>
         </div>
       </CardContent>

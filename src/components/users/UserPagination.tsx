@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from '@/components/ui/shadcn/select';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface UsersPaginationProps {
   page: number;
@@ -36,7 +37,7 @@ export function UsersPagination({
         </div>
         
         <div className="flex items-center gap-2">
-          <span className="text-sm">Items per page:</span>
+          <span className="text-sm">{_.items_per_page}</span>
           <Select
             value={limit.toString()}
             onValueChange={(value) => onLimitChange(parseInt(value))}
@@ -45,10 +46,10 @@ export function UsersPagination({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="5">5</SelectItem>
-              <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
+              <SelectItem value="5">{_.pages[0]}</SelectItem>
+              <SelectItem value="10">{_.pages[1]}</SelectItem>
+              <SelectItem value="25">{_.pages[2]}</SelectItem>
+              <SelectItem value="50">{_.pages[3]}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -97,7 +98,7 @@ export function UsersPagination({
           onClick={() => onPageChange(page + 1)}
           disabled={page === totalPages}
         >
-          Next
+          {_.next}
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/shadcn/label';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Lock, AlertCircle } from 'lucide-react';
 import { authAPI } from '@/api/endpoints/auth';
+import * as _ from '@/constants/en.json';
 
 export function SetPassword() {
   const { token } = useParams<{ token: string }>();
@@ -107,17 +108,17 @@ export function SetPassword() {
         <CardHeader className="space-y-1">
           <CardTitle className="flex items-center gap-2 text-2xl font-bold">
             <Lock className="h-6 w-6" />
-            Set Your Password
+            {_.login.setPassword}
           </CardTitle>
           <CardDescription>
-            Complete your account setup
+            {_.login.setPasswordDescription}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* First Name */}
             <div className="space-y-2">
-              <Label htmlFor="firstName">First Name</Label>
+              <Label htmlFor="firstName">{_.users.firstName}</Label>
               <Input
                 id="firstName"
                 name="firstName"
@@ -132,7 +133,7 @@ export function SetPassword() {
 
             {/* Last Name */}
             <div className="space-y-2">
-              <Label htmlFor="lastName">Last Name</Label>
+              <Label htmlFor="lastName">{_.users.lastName}</Label>
               <Input
                 id="lastName"
                 name="lastName"
@@ -147,7 +148,7 @@ export function SetPassword() {
 
             {/* Username */}
             <div className="space-y-2">
-              <Label htmlFor="userName">Username</Label>
+              <Label htmlFor="userName">{_.users.username}</Label>
               <Input
                 id="userName"
                 name="userName"
@@ -162,7 +163,7 @@ export function SetPassword() {
 
             {/* Password */}
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{_.login.password}</Label>
               <Input
                 id="password"
                 name="password"
@@ -177,7 +178,7 @@ export function SetPassword() {
 
             {/* Confirm Password */}
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">{_.login.confirmPassword}</Label>
               <Input
                 id="confirmPassword"
                 name="confirmPassword"

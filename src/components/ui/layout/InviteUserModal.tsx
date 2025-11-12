@@ -20,6 +20,7 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle, UserPlus } from 'lucide-react';
 import { invitesAPI } from '@/api/endpoints/invites';
+import * as _ from '@/constants/en.json';
 
 interface InviteUserModalProps {
   open: boolean;
@@ -115,17 +116,17 @@ export function InviteUserModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <UserPlus className="h-5 w-5" />
-            Invite User
+            {_.users.inviteUser}
           </DialogTitle>
           <DialogDescription>
-            Send an invitation to join your organization
+            {_.users.inviteUserDescription}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">
-              Email <span className="text-destructive">*</span>
+              {_.email} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="email"
@@ -140,7 +141,7 @@ export function InviteUserModal({
 
           <div className="space-y-2">
             <Label htmlFor="role">
-              Role <span className="text-destructive">*</span>
+              {_.role} <span className="text-destructive">*</span>
             </Label>
             <Select
               value={formData.role}
@@ -152,16 +153,16 @@ export function InviteUserModal({
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="EMPLOYEE">Employee</SelectItem>
-                <SelectItem value="MANAGER">Manager</SelectItem>
-                <SelectItem value="HR">HR</SelectItem>
-                <SelectItem value="ADMIN">Admin</SelectItem>
+                <SelectItem value="EMPLOYEE">{_.roles[0]}</SelectItem>
+                <SelectItem value="MANAGER">{_.roles[1]}</SelectItem>
+                <SelectItem value="HR">{_.roles[2]}</SelectItem>
+                <SelectItem value="ADMIN">{_.roles[3]}</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="manager">Manager (Optional)</Label>
+            <Label htmlFor="manager">{_.users.optionalManager}</Label>
             <Select
               value={formData.reporting_to}
               onValueChange={(value) => 
@@ -173,7 +174,7 @@ export function InviteUserModal({
                 <SelectValue placeholder="Select manager" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="none">No Manager</SelectItem>
+                <SelectItem value="none">{_.users.noManger}</SelectItem>
                 {managers.map((manager) => (
                   <SelectItem key={manager.id} value={manager.id}>
                     {manager.username} ({manager.role})
@@ -197,7 +198,7 @@ export function InviteUserModal({
               onClick={handleClose}
               disabled={loading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? 'Sending Invite...' : 'Send Invite'}

@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { ApplyLeaveModal } from '@/components/leaves/ApplyLeaveModal';
+import * as _ from '@/constants/en.json';
 
 interface MenuItem {
   label: string;
@@ -141,7 +142,7 @@ export function Sidebar() {
             className="w-full flex items-center justify-start  gap-3 rounded-lg transition-colors w-full bg- text-foreground hover:bg-muted"
           >
             <FilePlus2 className="h-5 w-5" />
-            <span className="font-medium">Apply Leave</span>
+            <span className="font-medium">{_.leaves.applyLeave}</span>
           </Button>
         </nav>
 
@@ -173,7 +174,7 @@ export function Sidebar() {
             size="sm"
           >
             <LogOut className="h-4 w-4 mr-2" />
-            Logout
+            {_.login.logout}
           </Button>
         </div>
       </aside>

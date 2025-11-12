@@ -14,6 +14,7 @@ import { Checkbox } from '@/components/ui/shadcn/checkbox';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle, Calendar } from 'lucide-react';
 import { holidaysAPI } from '@/api/endpoints/holidays';
+import * as _ from '@/constants/en.json';
 
 interface EditHolidayModalProps {
   holiday: Holiday | null;
@@ -99,17 +100,17 @@ export function EditHolidayModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
-            Edit Holiday
+            {_.holidays.edit}
           </DialogTitle>
           <DialogDescription>
-            Update holiday information
+            {_.holidays.update}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">
-              Holiday Name <span className="text-destructive">*</span>
+              {_.holidays.name} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="name"
@@ -123,7 +124,7 @@ export function EditHolidayModal({
 
           <div className="space-y-2">
             <Label htmlFor="holiday_date">
-              Date <span className="text-destructive">*</span>
+              {_.date} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="holiday_date"
@@ -143,7 +144,7 @@ export function EditHolidayModal({
               disabled={loading}
             />
             <Label htmlFor="recurring" className="text-sm font-medium">
-              Recurring holiday (repeats every year)
+              {_.holidays.recurringHoliday}
             </Label>
           </div>
 
@@ -161,7 +162,7 @@ export function EditHolidayModal({
               onClick={onClose}
               disabled={loading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? 'Saving...' : 'Save Changes'}

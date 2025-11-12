@@ -24,6 +24,7 @@ import { leavesAPI } from '@/api/endpoints/leaves';
 import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
 import type { LeaveType } from '@/types/leaves';
 import { differenceInDays, parseISO } from 'date-fns';
+import * as _ from '@/constants/en.json';
 
 interface ApplyLeaveModalProps {
   open: boolean;
@@ -262,17 +263,17 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Apply for Leave
+            {_.leaves.applyFor}
           </DialogTitle>
           <DialogDescription>
-            Fill in the details to submit your leave request
+            {_.leaves.fillIn}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="leave_type">
-              Leave Type <span className="text-destructive">*</span>
+              {_.leaves.leaveType} <span className="text-destructive">*</span>
             </Label>
             <Select
               value={formData.leave_type_id}
@@ -295,7 +296,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label htmlFor="start_date">
-                Start Date <span className="text-destructive">*</span>
+                {_.startDate} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="start_date"
@@ -321,7 +322,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
 
             <div className="space-y-2">
               <Label htmlFor="end_date">
-                End Date <span className="text-destructive">*</span>
+                {_.endDate} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="end_date"
@@ -343,7 +344,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
               disabled={loading}
             />
             <Label htmlFor="half_day" className="text-sm font-medium">
-              Apply half-day options
+              {_.leaves.applyForHalfDay}
             </Label>
           </div>
 
@@ -351,7 +352,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
             <div className="grid grid-cols-2 gap-4 p-4 bg-muted rounded-lg">
                 <div className="space-y-2">
                 <Label htmlFor="start_half">
-                    Start Date ({isSingleDay ? 'Only day' : 'First day'})
+                    {_.startDate} ({isSingleDay ? 'Only day' : 'First day'})
                 </Label>
                 <Select
                     value={formData.start_half}
@@ -391,7 +392,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
 
           <div className="space-y-2">
             <Label htmlFor="reason">
-              Reason <span className="text-destructive">*</span>
+              {_.reason} <span className="text-destructive">*</span>
             </Label>
             <Textarea
               id="reason"
@@ -406,7 +407,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
 
           <div className="space-y-2">
             <Label htmlFor="attachment">
-              Attachment {selectedLeaveType?.requires_document && <span className="text-destructive">*</span>}
+              {_.attachments} {selectedLeaveType?.requires_document && <span className="text-destructive">*</span>}
               <span className="text-xs text-muted-foreground ml-2">(Max 50MB)</span>
             </Label>
             
@@ -457,7 +458,7 @@ export function ApplyLeaveModal({ open, onClose, onSuccess }: ApplyLeaveModalPro
               onClick={handleClose}
               disabled={loading || uploading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading || uploading}>
               {loading ? 'Submitting...' : 'Apply for Leave'}

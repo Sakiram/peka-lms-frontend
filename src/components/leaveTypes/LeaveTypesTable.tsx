@@ -10,6 +10,7 @@ import {
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Edit2, Trash2, CheckCircle, XCircle } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface LeaveTypesTableProps {
   leaveTypes: LeaveType[];
@@ -35,7 +36,7 @@ export function LeaveTypesTable({
   if (leaveTypes.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p>No leave types found</p>
+        <p>{_.leaves.noLeaveTypes}</p>
       </div>
     );
   }
@@ -45,13 +46,13 @@ export function LeaveTypesTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Description</TableHead>
-            <TableHead>Max Days/Year</TableHead>
-            <TableHead>Requires Document</TableHead>
-            <TableHead>Carry Forward</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>{_.name}</TableHead>
+            <TableHead>{_.description}</TableHead>
+            <TableHead>{_.leaves.MaxDaysPerYear}</TableHead>
+            <TableHead>{_.leaves.RequiresDocument}</TableHead>
+            <TableHead>{_.leaves.CarryForward}</TableHead>
+            <TableHead>{_.status}</TableHead>
+            <TableHead className="text-right">{_.action}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -66,12 +67,12 @@ export function LeaveTypesTable({
                 {leaveType.requires_document ? (
                   <Badge variant="default" className="gap-1">
                     <CheckCircle className="h-3 w-3" />
-                    Yes
+                    {_.yes}
                   </Badge>
                 ) : (
                   <Badge variant="secondary" className="gap-1">
                     <XCircle className="h-3 w-3" />
-                    No
+                    {_.no}
                   </Badge>
                 )}
               </TableCell>
@@ -79,20 +80,20 @@ export function LeaveTypesTable({
                 {leaveType.carry_forward ? (
                   <Badge variant="default" className="gap-1">
                     <CheckCircle className="h-3 w-3" />
-                    Yes
+                    {_.yes}
                   </Badge>
                 ) : (
                   <Badge variant="secondary" className="gap-1">
                     <XCircle className="h-3 w-3" />
-                    No
+                    {_.no}
                   </Badge>
                 )}
               </TableCell>
               <TableCell>
                 {leaveType.active ? (
-                  <Badge variant="default">Active</Badge>
+                  <Badge variant="default">{_.active}</Badge>
                 ) : (
-                  <Badge variant="secondary">Inactive</Badge>
+                  <Badge variant="secondary">{_.inactive}</Badge>
                 )}
               </TableCell>
               <TableCell className="text-right">

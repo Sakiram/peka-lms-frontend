@@ -11,6 +11,7 @@ import { History, CheckCircle, XCircle, FileText, Clock } from 'lucide-react';
 import { leavesAPI } from '@/api/endpoints/leaves';
 import type { LeaveLog } from '@/types/leaves';
 import { format } from 'date-fns';
+import * as _ from "@/constants/en.json";
 
 interface LeaveLogsModalProps {
   leaveId: string | null;
@@ -78,7 +79,7 @@ export function LeaveLogsModal({ leaveId, open, onClose }: LeaveLogsModalProps) 
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <History className="h-5 w-5" />
-            Leave Activity Log
+            {_.leaves.activityLog}
           </DialogTitle>
         </DialogHeader>
 
@@ -122,7 +123,7 @@ export function LeaveLogsModal({ leaveId, open, onClose }: LeaveLogsModalProps) 
               {logs.length === 0 && (
                 <div className="text-center py-12 text-muted-foreground">
                   <History className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                  <p>No activity logs found</p>
+                  <p>{_.leaves.noActivityLog}</p>
                 </div>
               )}
             </div>

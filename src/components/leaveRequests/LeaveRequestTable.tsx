@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { CheckCircle, XCircle, ExternalLink, User } from 'lucide-react';
 import { format } from 'date-fns';
+import * as _ from '@/constants/en.json';
 
 interface LeaveRequestsTableProps {
   requests: LeaveRequest[];
@@ -36,7 +37,7 @@ export function LeaveRequestsTable({
   if (requests.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        <p>No leave requests found</p>
+        <p>{_.leaves.noLeaves}</p>
       </div>
     );
   }
@@ -59,15 +60,15 @@ export function LeaveRequestsTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Employee</TableHead>
-            <TableHead>Leave Type</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Days</TableHead>
-            <TableHead>Reason</TableHead>
-            <TableHead>Applied On</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Attachment</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>{_.leaves.tableHeader[0]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[1]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[2]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[3]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[4]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[5]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[6]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[7]}</TableHead>
+            <TableHead className="text-right">{_.leaves.tableHeader[8]}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -130,7 +131,7 @@ export function LeaveRequestsTable({
                       onClick={() => onApprove(request.id, request.leave_types.name)}
                     >
                       <CheckCircle className="h-4 w-4 mr-1" />
-                      Approve
+                      {_.approve}
                     </Button>
                     <Button
                       variant="destructive"
@@ -138,7 +139,7 @@ export function LeaveRequestsTable({
                       onClick={() => onReject(request.id, request.leave_types.name)}
                     >
                       <XCircle className="h-4 w-4 mr-1" />
-                      Reject
+                      {_.reject}
                     </Button>
                   </div>
                 ) : (

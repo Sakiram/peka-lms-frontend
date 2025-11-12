@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/shadcn/textarea';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle, Plus } from 'lucide-react';
 import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
+import * as _ from '@/constants/en.json';
 
 interface AddLeaveTypeModalProps {
   open: boolean;
@@ -103,18 +104,17 @@ export function AddLeaveTypeModal({ open, onClose, onSuccess }: AddLeaveTypeModa
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Plus className="h-5 w-5" />
-            Add Leave Type
+            {_.leaves.addLeaveType}
           </DialogTitle>
           <DialogDescription>
-            Create a new leave type for your organization
+            {_.leaves.createOrg}
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
           <div className="space-y-2">
             <Label htmlFor="name">
-              Name <span className="text-destructive">*</span>
+              {_.name} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="name"
@@ -143,7 +143,7 @@ export function AddLeaveTypeModal({ open, onClose, onSuccess }: AddLeaveTypeModa
           {/* Max Days Per Year */}
           <div className="space-y-2">
             <Label htmlFor="max_days_per_year">
-              Max Days Per Year <span className="text-destructive">*</span>
+              {_.leaves.maxDays} <span className="text-destructive">*</span>
             </Label>
             <Input
               id="max_days_per_year"
@@ -166,7 +166,7 @@ export function AddLeaveTypeModal({ open, onClose, onSuccess }: AddLeaveTypeModa
               disabled={loading}
             />
             <Label htmlFor="requires_document" className="text-sm font-medium">
-              Requires supporting document
+              {_.leaves.docRequired}
             </Label>
           </div>
 
@@ -179,7 +179,7 @@ export function AddLeaveTypeModal({ open, onClose, onSuccess }: AddLeaveTypeModa
               disabled={loading}
             />
             <Label htmlFor="carry_forward" className="text-sm font-medium">
-              Can carry forward to next year
+              {_.leaves.canCarryForward}
             </Label>
           </div>
 
@@ -199,7 +199,7 @@ export function AddLeaveTypeModal({ open, onClose, onSuccess }: AddLeaveTypeModa
               onClick={handleClose}
               disabled={loading}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? 'Adding...' : 'Add Leave Type'}

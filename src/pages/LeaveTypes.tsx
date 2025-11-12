@@ -12,6 +12,7 @@ import { LeaveTypesTable } from '@/components/leaveTypes/LeaveTypesTable';
 import { AddLeaveTypeModal } from '@/components/leaveTypes/AddLeaveTypeModal';
 import { EditLeaveTypeModal } from '@/components/leaveTypes/EditLeaveTypeModal';
 import { DeleteLeaveTypeDialog } from '@/components/leaveTypes/DeleteLeaveTypeDialog';
+import * as _ from '@/constants/en.json';
 
 export function LeaveTypes() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -23,7 +24,7 @@ export function LeaveTypes() {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            You don't have permission to access this page.
+            {_.leaves.noPermission}
           </AlertDescription>
         </Alert>
       </DashboardLayout>
@@ -75,14 +76,14 @@ export function LeaveTypes() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Leave Types</h1>
+          <h1 className="text-3xl font-bold">{_.leaves.leaveType}</h1>
           <p className="text-muted-foreground">
-            Manage leave types and policies
+            {_.leaves.description4}
           </p>
         </div>
         <Button onClick={() => setAddModalOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Add Leave Type
+          {_.leaves.addLeaveType}
         </Button>
       </div>
 
@@ -98,7 +99,7 @@ export function LeaveTypes() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            All Leave Types ({leaveTypes.length})
+            All {_.leaves.leaveType} ({leaveTypes.length})
           </CardTitle>
         </CardHeader>
         <CardContent>

@@ -14,6 +14,7 @@ import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/shadcn/avatar';
 import { User, Camera, Mail, Phone, Briefcase, Building2, AlertCircle } from 'lucide-react';
 import { usersAPI } from '@/api/endpoints/users';
+import * as _ from '@/constants/en.json';
 
 interface UserProfileModalProps {
   open: boolean;
@@ -145,7 +146,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl">
             <User className="h-6 w-6" />
-            User Profile
+            {_.users.profile}
           </DialogTitle>
         </DialogHeader>
 
@@ -177,7 +178,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             </div>
             
             {uploadingPic && (
-              <p className="text-sm text-muted-foreground">Uploading...</p>
+              <p className="text-sm text-muted-foreground">{_.uploading}</p>
             )}
           </div>
 
@@ -186,7 +187,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4" />
-                Email
+                {_.email}
               </div>
               <p className="text-sm font-medium">{user?.email}</p>
             </div>
@@ -194,7 +195,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             <div className="space-y-1">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Briefcase className="h-4 w-4" />
-                Role
+                {_.role}
               </div>
               <p className="text-sm font-medium">{user?.role}</p>
             </div>
@@ -202,7 +203,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             <div className="space-y-1 col-span-2">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Building2 className="h-4 w-4" />
-                Organization
+                {_.organization}
               </div>
               <p className="text-sm font-medium">{user?.organization?.org_name}</p>
             </div>
@@ -212,7 +213,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="first_name">
-                First Name <span className="text-destructive">*</span>
+                {_.users.firstName} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="first_name"
@@ -224,7 +225,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="last_name">Last Name</Label>
+              <Label htmlFor="last_name">{_.users.lastName}</Label>
               <Input
                 id="last_name"
                 value={formData.last_name}
@@ -236,7 +237,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
             <div className="space-y-2 col-span-2">
               <Label htmlFor="contact_no">
                 <Phone className="h-4 w-4 inline mr-1" />
-                Contact Number
+                {_.users.contact_no}
               </Label>
               <Input
                 id="contact_no"
@@ -272,7 +273,7 @@ export function UserProfileModal({ open, onClose }: UserProfileModalProps) {
               onClick={onClose}
               disabled={loading || uploadingPic}
             >
-              Cancel
+              {_.cancel}
             </Button>
             <Button type="submit" disabled={loading || uploadingPic}>
               {loading ? 'Updating...' : 'Update Profile'}

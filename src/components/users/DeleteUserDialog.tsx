@@ -12,6 +12,7 @@ import {
 import { usersAPI } from '@/api/endpoints/users';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface DeleteUserDialogProps {
   user: User | null;
@@ -54,10 +55,10 @@ export function DeleteUserDialog({
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete User</AlertDialogTitle>
+          <AlertDialogTitle>{_.users.delete}</AlertDialogTitle>
           <AlertDialogDescription>
-            Are you sure you want to delete {user.first_name} {user.last_name}?
-            This action cannot be undone.
+            {_.users.sure1} {user.first_name} {user.last_name}?
+            {_.users.sure2}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -68,7 +69,7 @@ export function DeleteUserDialog({
           </Alert>
         )}
 
-        <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+        <AlertDialogCancel disabled={loading}>{_.cancel}</AlertDialogCancel>
         <AlertDialogAction
           onClick={handleDelete}
           disabled={loading}

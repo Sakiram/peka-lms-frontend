@@ -12,6 +12,7 @@ import { HolidaysTable } from '@/components/holidays/HolidaysTable';
 import { AddHolidayModal } from '@/components/holidays/AddHolidayModal';
 import { EditHolidayModal } from '@/components/holidays/EditHolidayModal';
 import { DeleteHolidayDialog } from '@/components/holidays/DeleteHolidayDialog';
+import * as _ from '@/constants/en.json';
 
 export function Holidays() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -81,14 +82,14 @@ export function Holidays() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Holidays</h1>
+          <h1 className="text-3xl font-bold">{_.holidays.holidays}</h1>
           <p className="text-muted-foreground">
-            Manage company holidays and events
+            {_.holidays.description}
           </p>
         </div>
         <Button onClick={() => setAddModalOpen(true)}>
           <CalendarPlus className="h-4 w-4 mr-2" />
-          Add Holiday
+          {_.holidays.addHoliday}
         </Button>
       </div>
 
@@ -115,7 +116,7 @@ export function Holidays() {
           onClick={() => setShowAllYears(true)}
         >
           <CalendarDays className="h-4 w-4 mr-1" />
-          All Years
+          {_.holidays.allYears}
         </Button>
       </div>
 

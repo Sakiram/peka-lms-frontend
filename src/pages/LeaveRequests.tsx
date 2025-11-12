@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/shadcn/select';
+import * as _ from '@/constants/en.json';
 
 export function LeaveRequests() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -100,14 +101,14 @@ export function LeaveRequests() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold">Leave Requests</h1>
+          <h1 className="text-3xl font-bold">{_.leaves.leaveRequests}</h1>
           <p className="text-muted-foreground">
-            Review and manage employee leave requests
+            {_.leaves.description2}
           </p>
         </div>
         {pendingCount > 0 && (
           <div className="bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold">
-            {pendingCount} Pending
+            {pendingCount} {_.req[0]}
           </div>
         )}
       </div>
@@ -128,10 +129,10 @@ export function LeaveRequests() {
               <SelectValue placeholder="Filter by status" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Requests</SelectItem>
-              <SelectItem value="PENDING">Pending</SelectItem>
-              <SelectItem value="APPROVED">Approved</SelectItem>
-              <SelectItem value="REJECTED">Rejected</SelectItem>
+              <SelectItem value="all">{_.req[3]}</SelectItem>
+              <SelectItem value="PENDING">{_.req[0]}</SelectItem>
+              <SelectItem value="APPROVED">{_.req[1]}</SelectItem>
+              <SelectItem value="REJECTED">{_.req[2]}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -142,7 +143,7 @@ export function LeaveRequests() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <FileText className="h-5 w-5" />
-            Leave Requests ({filteredRequests.length})
+            {_.leaves.leaveRequests} ({filteredRequests.length})
           </CardTitle>
         </CardHeader>
         <CardContent>

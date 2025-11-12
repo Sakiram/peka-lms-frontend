@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import {  } from '@/components/ui/ThemeSwitcher';
+import * as _ from '@/constants/en.json';
 
 export const Login = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -46,15 +47,15 @@ export const Login = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Login</CardTitle>
+          <CardTitle className="text-2xl font-bold">{_.login.login}</CardTitle>
           <CardDescription>
-            Enter your credentials to access your account
+            {_.login.description}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{_.email}</Label>
               <Input
                 id="email"
                 name="email"
@@ -68,7 +69,7 @@ export const Login = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{_.login.password}</Label>
               <Input
                 id="password"
                 name="password"
@@ -92,9 +93,9 @@ export const Login = () => {
             </Button>
 
             <div className="text-center text-sm">
-              Don't have an organization?{' '}
+              {_.login.noAccount}{' '}
               <Link to="/signup" className="text-primary hover:underline">
-                Create one
+                {_.login.createOne}
               </Link>
             </div>
           </form>

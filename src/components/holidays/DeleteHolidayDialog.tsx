@@ -12,6 +12,7 @@ import {
 import { holidaysAPI } from '@/api/endpoints/holidays';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface DeleteHolidayDialogProps {
   holiday: Holiday | null;
@@ -54,7 +55,7 @@ export function DeleteHolidayDialog({
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Holiday</AlertDialogTitle>
+          <AlertDialogTitle>{_.delete} {_.holidays.holidays}</AlertDialogTitle>
           <AlertDialogDescription>
             Are you sure you want to delete "{holiday.name}"?
             This action cannot be undone.
@@ -68,7 +69,7 @@ export function DeleteHolidayDialog({
           </Alert>
         )}
 
-        <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+        <AlertDialogCancel disabled={loading}>{_.cancel}</AlertDialogCancel>
         <AlertDialogAction
           onClick={handleDelete}
           disabled={loading}

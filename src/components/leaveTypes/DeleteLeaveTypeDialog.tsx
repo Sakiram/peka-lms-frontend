@@ -12,6 +12,7 @@ import {
 import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle } from 'lucide-react';
+import * as _ from '@/constants/en.json';
 
 interface DeleteLeaveTypeDialogProps {
   leaveType: LeaveType | null;
@@ -54,7 +55,7 @@ export function DeleteLeaveTypeDialog({
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Leave Type</AlertDialogTitle>
+          <AlertDialogTitle>{_.leaves.delete}</AlertDialogTitle>
           <AlertDialogDescription>
             Are you sure you want to delete "{leaveType.name}"?
             This action cannot be undone.
@@ -68,7 +69,7 @@ export function DeleteLeaveTypeDialog({
           </Alert>
         )}
 
-        <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
+        <AlertDialogCancel disabled={loading}>{_.cancel}</AlertDialogCancel>
         <AlertDialogAction
           onClick={handleDelete}
           disabled={loading}

@@ -7,6 +7,7 @@ import { Clock, Calendar, ChevronRight } from 'lucide-react';
 import { leavesAPI } from '@/api/endpoints/leaves';
 import type { Leave } from '@/types/leaves';
 import { format } from 'date-fns';
+import * as _ from "@/constants/en.json";
 
 export function PendingApprovalsCard() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export function PendingApprovalsCard() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5" />
-            Pending Approvals
+            {_.leaves.pending}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -57,7 +58,7 @@ export function PendingApprovalsCard() {
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <Clock className="h-5 w-5" />
-          Pending Approvals
+          {_.leaves.pending}
           {pendingLeaves.length > 0 && (
             <Badge variant="destructive" className="ml-2">
               {pendingLeaves.length}
@@ -66,7 +67,7 @@ export function PendingApprovalsCard() {
         </CardTitle>
         {pendingLeaves.length > 0 && (
           <Button variant="ghost" size="sm" onClick={() => navigate('/leaves')}>
-            View All
+            {_.leaves.viewAll}
           </Button>
         )}
       </CardHeader>
@@ -74,7 +75,7 @@ export function PendingApprovalsCard() {
         {pendingLeaves.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Clock className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p>No pending approvals</p>
+            <p>{_.leaves.noPending}</p>
           </div>
         ) : (
           <div className="space-y-3">

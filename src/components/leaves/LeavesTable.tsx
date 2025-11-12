@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { History, ExternalLink } from 'lucide-react';
 import { format } from 'date-fns';
+import * as _ from '@/constants/en.json';
 
 interface LeavesTableProps {
   leaves: Leave[];
@@ -55,14 +56,14 @@ export function LeavesTable({ leaves, isLoading, onViewLogs }: LeavesTableProps)
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Leave Type</TableHead>
-            <TableHead>Duration</TableHead>
-            <TableHead>Days</TableHead>
-            <TableHead>Reason</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Applied On</TableHead>
-            <TableHead>Attachment</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead>{_.leaves.tableHeader[1]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[2]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[3]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[4]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[6]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[5]}</TableHead>
+            <TableHead>{_.leaves.tableHeader[7]}</TableHead>
+            <TableHead className="text-right">{_.leaves.tableHeader[8]}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -110,7 +111,7 @@ export function LeavesTable({ leaves, isLoading, onViewLogs }: LeavesTableProps)
                   onClick={() => onViewLogs(leave.id)}
                 >
                   <History className="h-4 w-4 mr-1" />
-                  Logs
+                  {_.logs}
                 </Button>
               </TableCell>
             </TableRow>
