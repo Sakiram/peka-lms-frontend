@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { Calendar, AlertCircle, CalendarPlus, CalendarDays } from 'lucide-react';
-import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
+import { holidaysAPI } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import { HolidaysTable } from '@/components/holidays/HolidaysTable';
 import { AddHolidayModal } from '@/components/holidays/AddHolidayModal';
 import { EditHolidayModal } from '@/components/holidays/EditHolidayModal';

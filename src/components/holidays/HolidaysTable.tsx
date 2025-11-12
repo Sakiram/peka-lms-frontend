@@ -1,4 +1,4 @@
-import type { Holiday } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import {
   Table,
   TableBody,

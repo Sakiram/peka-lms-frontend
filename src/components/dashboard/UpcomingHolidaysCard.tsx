@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Button } from '@/components/ui/shadcn/button';
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Calendar, PartyPopper } from 'lucide-react';
-import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
+import { holidaysAPI } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import { format, differenceInDays, startOfDay } from 'date-fns';
 import { HolidaysCalendarModal } from './HolidaysCalenderModal';
 

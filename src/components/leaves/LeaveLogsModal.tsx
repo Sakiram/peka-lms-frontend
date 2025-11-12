@@ -8,7 +8,8 @@ import {
 import { Badge } from '@/components/ui/shadcn/badge';
 import { ScrollArea } from '@/components/ui/shadcn/scroll-area';
 import { History, CheckCircle, XCircle, FileText, Clock } from 'lucide-react';
-import { leavesAPI, type LeaveLog } from '@/api/endpoints/leaves';
+import { leavesAPI } from '@/api/endpoints/leaves';
+import type { LeaveLog } from '@/types/leaves';
 import { format } from 'date-fns';
 
 interface LeaveLogsModalProps {

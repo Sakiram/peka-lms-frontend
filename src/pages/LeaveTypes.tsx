@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { FileText, AlertCircle, Plus } from 'lucide-react';
-import { leaveTypesAPI, type LeaveType } from '@/api/endpoints/leaveTypes';
+import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
+import type { LeaveType } from '@/types/leaves';
 import { LeaveTypesTable } from '@/components/leaveTypes/LeaveTypesTable';
 import { AddLeaveTypeModal } from '@/components/leaveTypes/AddLeaveTypeModal';
 import { EditLeaveTypeModal } from '@/components/leaveTypes/EditLeaveTypeModal';

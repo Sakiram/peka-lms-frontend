@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { LeaveType } from '@/api/endpoints/leaveTypes';
+import type { LeaveType } from '@/types/leaves';
 import {
   Dialog,
   DialogContent,

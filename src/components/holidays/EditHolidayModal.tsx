@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { Holiday } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import {
   Dialog,
   DialogContent,

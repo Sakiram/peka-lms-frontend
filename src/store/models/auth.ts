@@ -1,7 +1,8 @@
 import { createModel } from '@rematch/core';
 import type { RootModel } from '../index';
 import type { AuthState, User, } from '@/types';
-import { authAPI, type LoginRequest } from '@/api/endpoints/auth';
+import { authAPI } from '@/api/endpoints/auth';
+import type { LoginRequest } from '@/types/index';
 import { getUserMetadata, setUserMetadata, removeUserMetadata } from '@/utils/storage';
 
 export const auth = createModel<RootModel>()({

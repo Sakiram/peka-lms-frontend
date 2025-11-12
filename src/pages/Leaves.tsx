@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { FileText, Plus, AlertCircle, TrendingUp } from 'lucide-react';
-import { leavesAPI, type LeaveBalance, type Leave } from '@/api/endpoints/leaves';
+import { leavesAPI } from '@/api/endpoints/leaves';
+import type { LeaveBalance, Leave } from '@/types/leaves';
 import { ApplyLeaveModal } from '@/components/leaves/ApplyLeaveModal';
 import { LeaveBalanceCard } from '@/components/leaves/LeaveBalanceCard';
 import { LeavesTable } from '@/components/leaves/LeavesTable';

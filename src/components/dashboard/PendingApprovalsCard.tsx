@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Button } from '@/components/ui/shadcn/button';
 import { Clock, Calendar, ChevronRight } from 'lucide-react';
-import { leavesAPI, type Leave } from '@/api/endpoints/leaves';
+import { leavesAPI } from '@/api/endpoints/leaves';
+import type { Leave } from '@/types/leaves';
 import { format } from 'date-fns';
 
 export function PendingApprovalsCard() {

@@ -8,7 +8,8 @@ import {
 import { Badge } from '@/components/ui/shadcn/badge';
 import { ScrollArea } from '@/components/ui/shadcn/scroll-area';
 import { Calendar } from 'lucide-react';
-import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
+import { holidaysAPI } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import { format } from 'date-fns';
 
 interface HolidaysCalendarModalProps {

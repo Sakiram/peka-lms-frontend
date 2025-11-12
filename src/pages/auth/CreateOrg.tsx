@@ -4,7 +4,8 @@ import { Button } from '@/components/ui/shadcn/button';
 import { Input } from '@/components/ui/shadcn/input';
 import { Label } from '@/components/ui/shadcn/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
-import { orgAPI, type CreateOrgRequest } from '@/api/endpoints/org';
+import { orgAPI } from '@/api/endpoints/org';
+import type { CreateOrgRequest } from '@/types/org';
 import type { OrgSignupStep1, OrgSignupStep2 } from '@/types';
 
 export const OrgSignup = () => {

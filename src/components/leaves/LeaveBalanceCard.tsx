@@ -1,4 +1,4 @@
-import type { LeaveBalance } from '@/api/endpoints/leaves';
+import type { LeaveBalance } from '@/types/leaves';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Calendar } from 'lucide-react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';

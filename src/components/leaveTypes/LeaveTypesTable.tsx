@@ -1,4 +1,4 @@
-import type { LeaveType } from '@/api/endpoints/leaveTypes';
+import type { LeaveType } from '@/types/leaves';
 import {
   Table,
   TableBody,

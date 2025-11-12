@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Holiday } from '@/api/endpoints/holidays';
+import type { Holiday } from '@/types/holidays';
 import {
   AlertDialog,
   AlertDialogAction,

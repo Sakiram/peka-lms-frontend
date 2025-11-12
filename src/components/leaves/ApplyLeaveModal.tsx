@@ -21,7 +21,8 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle, X, FileText } from 'lucide-react';
 import { leavesAPI } from '@/api/endpoints/leaves';
-import { leaveTypesAPI, type LeaveType } from '@/api/endpoints/leaveTypes';
+import { leaveTypesAPI } from '@/api/endpoints/leaveTypes';
+import type { LeaveType } from '@/types/leaves';
 import { differenceInDays, parseISO } from 'date-fns';
 
 interface ApplyLeaveModalProps {

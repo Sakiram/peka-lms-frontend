@@ -5,7 +5,8 @@ import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { FileText, AlertCircle, Filter } from 'lucide-react';
-import { leavesAPI, type LeaveRequest } from '@/api/endpoints/leaves';
+import { leavesAPI } from '@/api/endpoints/leaves';
+import type { LeaveRequest } from '@/types/leaves';
 import { LeaveRequestsTable } from '@/components/leaveRequests/LeaveRequestTable';
 import { LeaveActionDialog } from '@/components/leaveRequests/LeaveActionDialog';
 import {

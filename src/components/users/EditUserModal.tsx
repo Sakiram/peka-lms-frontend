@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import type { User } from '@/api/endpoints/users';
+import type { User, UpdateUserPayload } from '@/types/users';
 import {
   Dialog,
   DialogContent,
@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/shadcn/select';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
 import { AlertCircle } from 'lucide-react';
-import { usersAPI, type UpdateUserPayload } from '@/api/endpoints/users';
+import { usersAPI } from '@/api/endpoints/users';
 
 interface EditUserModalProps {
   user: User | null;

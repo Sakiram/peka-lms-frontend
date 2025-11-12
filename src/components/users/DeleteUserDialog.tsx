@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { User } from '@/api/endpoints/users';
+import type { User } from '@/types/users';
 import {
   AlertDialog,
   AlertDialogAction,
