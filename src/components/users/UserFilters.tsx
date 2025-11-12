@@ -19,16 +19,12 @@ export interface FilterValues {
   search: string;
   role: string;
   status: string;
-  sortBy: string;
-  order: 'asc' | 'desc';
 }
 
 const defaultFilters: FilterValues = {
   search: '',
   role: '',
   status: '',
-  sortBy: 'username',
-  order: 'asc',
 };
 
 export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) {
@@ -85,9 +81,7 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
         </div>
       </div>
 
-      {/* Filters Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-        {/* Role Filter - Fixed */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <Select
           value={filters.role === '' ? 'all-roles' : filters.role}
           onValueChange={(value) => 
@@ -107,7 +101,6 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
           </SelectContent>
         </Select>
 
-        {/* Status Filter - Fixed */}
         <Select
           value={filters.status === '' ? 'all-status' : filters.status}
           onValueChange={(value) => 
@@ -125,47 +118,13 @@ export function UsersFilters({ onFiltersChange, isLoading }: UsersFiltersProps) 
           </SelectContent>
         </Select>
 
-        {/* Sort By */}
-        <Select
-          value={filters.sortBy}
-          onValueChange={(value) => handleChange('sortBy', value)}
-          disabled={isLoading}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Sort By" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="username">Username</SelectItem>
-            <SelectItem value="first_name">First Name</SelectItem>
-            <SelectItem value="email">Email</SelectItem>
-            <SelectItem value="join_date">Join Date</SelectItem>
-          </SelectContent>
-        </Select>
-
-        {/* Order */}
-        <Select
-          value={filters.order}
-          onValueChange={(value) => 
-            handleChange('order', value as 'asc' | 'desc')
-          }
-          disabled={isLoading}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Order" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="asc">Ascending</SelectItem>
-            <SelectItem value="desc">Descending</SelectItem>
-          </SelectContent>
-        </Select>
-
         {/* Reset Button */}
         <Button
           variant="outline"
           onClick={handleReset}
           disabled={isLoading}
           size="sm"
-          className="w-full"
+          className="ml-auto w-fit"
         >
           <X className="h-4 w-4 mr-1" />
           Reset

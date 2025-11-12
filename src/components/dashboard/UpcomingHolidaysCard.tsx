@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/shadcn/button';
 import { Badge } from '@/components/ui/shadcn/badge';
 import { Calendar, PartyPopper } from 'lucide-react';
 import { holidaysAPI, type Holiday } from '@/api/endpoints/holidays';
-import { format, differenceInDays } from 'date-fns';
+import { format, differenceInDays, startOfDay } from 'date-fns';
 import { HolidaysCalendarModal } from './HolidaysCalenderModal';
 
 export function UpcomingHolidaysCard() {
@@ -28,10 +28,12 @@ export function UpcomingHolidaysCard() {
   };
 
   const getDaysUntil = (date: string) => {
-    const diff = differenceInDays(new Date(date), new Date());
+    const targetDate = startOfDay(new Date(date));
+    const today = startOfDay(new Date());
+    const diff = differenceInDays(targetDate, today);
     if (diff === 0) return 'Today';
     if (diff === 1) return 'Tomorrow';
-    return `in ${diff} days`;
+    return `in ${diff-1} days`;
   };
 
   if (loading) {

@@ -138,7 +138,7 @@ export function Sidebar() {
               setApplyLeaveModalOpen(true);
               setIsOpen(false);
             }}
-            className="w-full flex items-center justify-start gap-3 px-4 py-2 rounded-lg transition-colors w-full bg- text-foreground hover:bg-muted"
+            className="w-full flex items-center justify-start  gap-3 rounded-lg transition-colors w-full bg- text-foreground hover:bg-muted"
           >
             <FilePlus2 className="h-5 w-5" />
             <span className="font-medium">Apply Leave</span>

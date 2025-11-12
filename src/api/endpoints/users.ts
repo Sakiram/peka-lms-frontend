@@ -75,21 +75,11 @@ export const usersAPI = {
   },
   getManagers: async (): Promise<User[]> => {
     const response = await apiClient.get<UsersResponse>(
-      `/users?limit=100&role=ADMIN&_t=${Date.now()}`
+      `/users?limit=100&role=ADMIN,MANAGER,HR&_t=${Date.now()}`
     );
-    const admins = response.data.data.data;
+    const managers = response.data.data.data;
 
-    const hrs = await apiClient.get<UsersResponse>(
-      `/users?limit=100&role=HR&_t=${Date.now()}`
-    );
-    const hrUsers = hrs.data.data.data;
-
-    const managers = await apiClient.get<UsersResponse>(
-      `/users?limit=100&role=MANAGER&_t=${Date.now()}`
-    );
-    const managerUsers = managers.data.data.data;
-
-    return [...admins, ...hrUsers, ...managerUsers];
+    return [...managers];
   },
 
   // Update user

@@ -48,18 +48,16 @@ export function Organization() {
     search: '',
     role: '',
     status: '',
-    sortBy: 'username',
-    order: 'asc',
   });
 
-  // Modal states
+  const [sortBy, setSortBy] = useState('username');
+  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deletingUser, setDeletingUser] = useState<User | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [inviteModalOpen, setInviteModalOpen] = useState(false); // Add this
-
-  // ... existing loadUsers and loadManagers functions ...
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
 
   const loadUsers = useCallback(async () => {
     try {
@@ -71,8 +69,8 @@ export function Organization() {
         limit,
         role: filters.role || undefined,
         status: filters.status || undefined,
-        sortBy: filters.sortBy,
-        order: filters.order,
+        sortBy,
+        order,
         search: filters.search || undefined,
       });
 
@@ -87,7 +85,7 @@ export function Organization() {
     } finally {
       setLoading(false);
     }
-  }, [page, limit, filters]);
+  }, [page, limit, filters, sortBy, order]);
 
   const loadManagers = useCallback(async () => {
     try {
@@ -111,6 +109,16 @@ export function Organization() {
     setPage(1);
   };
 
+   const handleSort = (field: string) => {
+    if (sortBy === field) {
+      setOrder(order === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setOrder('asc');
+    }
+    setPage(1);
+  };
+  
   const handleEditClick = (selectedUser: User) => {
     setEditingUser(selectedUser);
     setEditModalOpen(true);
@@ -168,6 +176,9 @@ export function Organization() {
               currentUserId={user.id}
               onEdit={handleEditClick}
               onDelete={handleDeleteClick}
+              sortBy={sortBy}
+              order={order}
+              onSort={handleSort}
             />
           </div>
 
