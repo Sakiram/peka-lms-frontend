@@ -17,6 +17,7 @@ import {
   FilePlus2,
 } from 'lucide-react';
 import { useState } from 'react';
+import { ApplyLeaveModal } from '@/components/leaves/ApplyLeaveModal';
 
 interface MenuItem {
   label: string;
@@ -32,6 +33,7 @@ export function Sidebar() {
   const [profileModalOpen, setProfileModalOpen] = useState(false);
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(true);
+  const [applyLeaveModalOpen, setApplyLeaveModalOpen] = useState(false);
 
   // Define menu items with role-based access
   const menuItems: MenuItem[] = useMemo(() => {
@@ -131,6 +133,16 @@ export function Sidebar() {
               <span className="font-medium">{item.label}</span>
             </NavLink>
           ))}
+          <Button
+            onClick={() => {
+              setApplyLeaveModalOpen(true);
+              setIsOpen(false);
+            }}
+            className="w-full flex items-center justify-start gap-3 px-4 py-2 rounded-lg transition-colors w-full bg- text-foreground hover:bg-muted"
+          >
+            <FilePlus2 className="h-5 w-5" />
+            <span className="font-medium">Apply Leave</span>
+          </Button>
         </nav>
 
         {/* User Info & Logout Section */}
@@ -170,7 +182,14 @@ export function Sidebar() {
         open={profileModalOpen}
         onClose={() => setProfileModalOpen(false)}
       />
-
+      <ApplyLeaveModal
+        open={applyLeaveModalOpen}
+        onClose={() => setApplyLeaveModalOpen(false)}
+        onSuccess={() => {
+          // Optional: refresh leaves or show success message
+          setApplyLeaveModalOpen(false);
+        }}
+      />
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/50 md:hidden z-30"
