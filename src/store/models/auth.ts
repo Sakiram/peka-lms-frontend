@@ -3,7 +3,7 @@ import type { RootModel } from '../index';
 import type { AuthState, User, } from '@/types';
 import { authAPI } from '@/api/endpoints/auth';
 import type { LoginRequest } from '@/types/index';
-import { getUserMetadata, setUserMetadata, removeUserMetadata } from '@/utils/storage';
+import { getUserMetadata, setUserMetadata, removeUserMetadata } from '@/store/storage';
 
 export const auth = createModel<RootModel>()({
   state: {
@@ -24,6 +24,15 @@ export const auth = createModel<RootModel>()({
         ...state,
         user: payload.user,
         token: null,
+        isAuthenticated: true,
+        loading: false,
+      };
+    },
+
+     rehydrateState(state, payload: { user: User }) {
+      return {
+        ...state,
+        user: payload.user,
         isAuthenticated: true,
         loading: false,
       };
@@ -87,7 +96,7 @@ export const auth = createModel<RootModel>()({
       try {
         const storedUser = getUserMetadata();
         if (storedUser) {
-          dispatch.auth.setAuth({user:storedUser});
+          dispatch.auth.rehydrateState({user:storedUser});
         } else {
           dispatch.auth.setLoading(false);
         }

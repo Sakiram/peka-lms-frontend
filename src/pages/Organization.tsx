@@ -32,7 +32,6 @@ export function Organization() {
     );
   }
 
-  // Users state
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -41,11 +40,9 @@ export function Organization() {
   const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
-  // Managers state
   const [managers, setManagers] = useState<User[]>([]);
   const [loadingManagers, setLoadingManagers] = useState(false);
 
-  // Filters state
   const [filters, setFilters] = useState<FilterValues>({
     search: '',
     role: '',
@@ -137,7 +134,6 @@ export function Organization() {
 
   return (
     <DashboardLayout>
-      {/* Header with Invite Button */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.organization}</h1>
@@ -208,7 +204,6 @@ export function Organization() {
         </CardContent>
       </Card>
 
-      {/* Edit Modal */}
       <EditUserModal
         user={editingUser}
         open={editModalOpen}
@@ -221,7 +216,6 @@ export function Organization() {
         isLoadingManagers={loadingManagers}
       />
 
-      {/* Delete Dialog */}
       <DeleteUserDialog
         user={deletingUser}
         open={deleteDialogOpen}
@@ -232,7 +226,6 @@ export function Organization() {
         onSuccess={handleRefresh}
       />
 
-      {/* Invite Modal - Add this */}
       <InviteUserModal
         open={inviteModalOpen}
         onClose={() => setInviteModalOpen(false)}

@@ -120,7 +120,6 @@ export function LeaveRequests() {
         </Alert>
       )}
 
-      {/* Filter */}
       <div className="mb-4">
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4 text-muted-foreground" />
@@ -138,7 +137,6 @@ export function LeaveRequests() {
         </div>
       </div>
 
-      {/* Requests Table */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -156,7 +154,6 @@ export function LeaveRequests() {
         </CardContent>
       </Card>
 
-      {/* Action Confirmation Dialog */}
       <LeaveActionDialog
         leaveId={selectedLeaveId}
         leaveType={selectedUsername}

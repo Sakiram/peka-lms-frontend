@@ -19,7 +19,6 @@ export function Leaves() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Leave logs modal
   const [logsModalOpen, setLogsModalOpen] = useState(false);
   const [selectedLeaveId, setSelectedLeaveId] = useState<string | null>(null);
 
@@ -54,12 +53,11 @@ export function Leaves() {
   };
 
   const handleSuccess = () => {
-    loadData(); // Refresh data after applying leave
+    loadData();
   };
 
   return (
     <DashboardLayout>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.leaves.name}</h1>
@@ -78,7 +76,6 @@ export function Leaves() {
         </Alert>
       )}
 
-      {/* Leave Balance Section */}
       <div className="mb-8">
         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
@@ -106,7 +103,6 @@ export function Leaves() {
         )}
       </div>
 
-      {/* Leave History Section */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -123,14 +119,12 @@ export function Leaves() {
         </CardContent>
       </Card>
 
-      {/* Apply Leave Modal */}
       <ApplyLeaveModal
         open={applyModalOpen}
         onClose={() => setApplyModalOpen(false)}
         onSuccess={handleSuccess}
       />
 
-      {/* Leave Logs Modal */}
       <LeaveLogsModal
         leaveId={selectedLeaveId}
         open={logsModalOpen}

@@ -7,7 +7,7 @@ const SCHEME_KEY = 'color-scheme';
 const MODE_KEY = 'color-mode';
 
 export const useTheme = () => {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('default');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('purple');
   const [mode, setMode] = useState<Mode>('light');
   const [mounted, setMounted] = useState(false);
 
@@ -25,13 +25,10 @@ export const useTheme = () => {
   const applyTheme = (scheme: ColorScheme, themeMode: Mode) => {
     const root = document.documentElement;
     
-    // Remove all scheme and mode classes
     root.classList.remove('default', 'purple', 'caffine', 'light', 'dark');
     
-    // Apply new classes
     root.classList.add(scheme, themeMode);
     
-    // Save to localStorage
     localStorage.setItem(SCHEME_KEY, scheme);
     localStorage.setItem(MODE_KEY, themeMode);
   };

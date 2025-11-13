@@ -147,7 +147,6 @@ export function AddHolidayModal({ open, onClose, onSuccess }: AddHolidayModalPro
             </Label>
           </div>
 
-          {/* Error */}
           {error && (
             <Alert variant="destructive">
               <AlertCircle className="h-4 w-4" />
@@ -155,7 +154,6 @@ export function AddHolidayModal({ open, onClose, onSuccess }: AddHolidayModalPro
             </Alert>
           )}
 
-          {/* Actions */}
           <div className="flex gap-2 justify-end pt-4">
             <Button
               type="button"

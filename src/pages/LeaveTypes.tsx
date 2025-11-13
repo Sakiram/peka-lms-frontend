@@ -17,7 +17,6 @@ import * as _ from '@/constants/en.json';
 export function LeaveTypes() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  // Permission check - Only ADMIN and HR
   if (!user || !['ADMIN', 'HR'].includes(user.role)) {
     return (
       <DashboardLayout>
@@ -35,7 +34,6 @@ export function LeaveTypes() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Modal states
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingLeaveType, setEditingLeaveType] = useState<LeaveType | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -73,7 +71,6 @@ export function LeaveTypes() {
 
   return (
     <DashboardLayout>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.leaves.leaveType}</h1>
@@ -94,7 +91,6 @@ export function LeaveTypes() {
         </Alert>
       )}
 
-      {/* Leave Types Table */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">

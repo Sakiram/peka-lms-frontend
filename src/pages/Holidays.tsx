@@ -19,14 +19,13 @@ export function Holidays() {
   const [showAllYears, setShowAllYears] = useState(false);
   const currentYear = new Date().getFullYear();
 
-  // Permission check
   if (!user || !['ADMIN', 'HR'].includes(user.role)) {
     return (
       <DashboardLayout>
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>
-            You don't have permission to access this page.
+            {_.leaves.noPermission}
           </AlertDescription>
         </Alert>
       </DashboardLayout>
@@ -37,7 +36,6 @@ export function Holidays() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Modal states
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [editingHoliday, setEditingHoliday] = useState<Holiday | null>(null);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -49,7 +47,6 @@ export function Holidays() {
       setLoading(true);
       setError('');
       const data = await holidaysAPI.getAllHolidays(showAllYears);
-      // Sort by date
       const sorted = data.sort((a, b) => 
         new Date(a.holiday_date).getTime() - new Date(b.holiday_date).getTime()
       );
@@ -79,7 +76,6 @@ export function Holidays() {
 
   return (
     <DashboardLayout>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.holidays.holidays}</h1>
@@ -100,7 +96,6 @@ export function Holidays() {
         </Alert>
       )}
 
-       {/* ADD FILTER BUTTONS HERE */}
       <div className="flex gap-2 mb-4">
         <Button
           variant={!showAllYears ? 'default' : 'outline'}
@@ -120,7 +115,6 @@ export function Holidays() {
         </Button>
       </div>
 
-      {/* Holidays Table */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -138,14 +132,12 @@ export function Holidays() {
         </CardContent>
       </Card>
 
-      {/* Add Holiday Modal */}
       <AddHolidayModal
         open={addModalOpen}
         onClose={() => setAddModalOpen(false)}
         onSuccess={loadHolidays}
       />
 
-      {/* Edit Holiday Modal */}
       <EditHolidayModal
         holiday={editingHoliday}
         open={editModalOpen}
@@ -156,7 +148,6 @@ export function Holidays() {
         onSuccess={loadHolidays}
       />
 
-      {/* Delete Holiday Dialog */}
       <DeleteHolidayDialog
         holiday={deletingHoliday}
         open={deleteDialogOpen}

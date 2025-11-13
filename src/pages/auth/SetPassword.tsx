@@ -116,7 +116,6 @@ export function SetPassword() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* First Name */}
             <div className="space-y-2">
               <Label htmlFor="firstName">{_.users.firstName}</Label>
               <Input
@@ -131,7 +130,6 @@ export function SetPassword() {
               />
             </div>
 
-            {/* Last Name */}
             <div className="space-y-2">
               <Label htmlFor="lastName">{_.users.lastName}</Label>
               <Input
@@ -146,7 +144,6 @@ export function SetPassword() {
               />
             </div>
 
-            {/* Username */}
             <div className="space-y-2">
               <Label htmlFor="userName">{_.users.username}</Label>
               <Input
@@ -161,7 +158,6 @@ export function SetPassword() {
               />
             </div>
 
-            {/* Password */}
             <div className="space-y-2">
               <Label htmlFor="password">{_.login.password}</Label>
               <Input
@@ -176,7 +172,6 @@ export function SetPassword() {
               />
             </div>
 
-            {/* Confirm Password */}
             <div className="space-y-2">
               <Label htmlFor="confirmPassword">{_.login.confirmPassword}</Label>
               <Input
@@ -191,7 +186,6 @@ export function SetPassword() {
               />
             </div>
 
-            {/* Error Messages */}
             {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
@@ -206,7 +200,6 @@ export function SetPassword() {
               </Alert>
             )}
 
-            {/* Submit Button */}
             <Button
               type="submit"
               className="w-full"

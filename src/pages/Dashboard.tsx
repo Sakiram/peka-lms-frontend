@@ -11,7 +11,6 @@ export function Dashboard() {
 
   return (
     <DashboardLayout>
-      {/* Top Bar */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.dashboard_title}</h1>
@@ -24,7 +23,6 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* Dashboard Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <PendingApprovalsCard />
         <UpcomingHolidaysCard />

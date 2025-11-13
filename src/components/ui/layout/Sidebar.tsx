@@ -36,7 +36,6 @@ export function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const [applyLeaveModalOpen, setApplyLeaveModalOpen] = useState(false);
 
-  // Define menu items with role-based access
   const menuItems: MenuItem[] = useMemo(() => {
     return [
       {
@@ -103,13 +102,11 @@ export function Sidebar() {
         {isOpen ? <X /> : <Menu />}
       </Button>
 
-      {/* Sidebar */}
       <aside
         className={`fixed md:sticky top-0 left-0 h-screen w-64 bg-card border-r border-border transition-transform duration-300 ease-in-out z-40 flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >
-        {/* Sidebar Header */}
         <div className="p-6 border-b border-border">
           <h1 className="text-xl font-bold">{user?.organization?.org_name}</h1>
           <p className="text-xs text-muted-foreground mt-1">
@@ -117,7 +114,6 @@ export function Sidebar() {
           </p>
         </div>
 
-        {/* Menu Items - Scrollable */}
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {visibleMenuItems.map((item) => (
             <NavLink
@@ -146,7 +142,6 @@ export function Sidebar() {
           </Button>
         </nav>
 
-        {/* User Info & Logout Section */}
         <div className="border-t border-border bg-card p-4">
           <button
             onClick={() => setProfileModalOpen(true)}
@@ -187,7 +182,6 @@ export function Sidebar() {
         open={applyLeaveModalOpen}
         onClose={() => setApplyLeaveModalOpen(false)}
         onSuccess={() => {
-          // Optional: refresh leaves or show success message
           setApplyLeaveModalOpen(false);
         }}
       />

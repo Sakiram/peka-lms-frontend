@@ -64,12 +64,12 @@ export function HolidaysTable({
                 {holiday.recurring ? (
                   <Badge variant="default" className="gap-1">
                     <CheckCircle className="h-3 w-3" />
-                    Yes
+                    {_.yes}
                   </Badge>
                 ) : (
                   <Badge variant="secondary" className="gap-1">
                     <XCircle className="h-3 w-3" />
-                    No
+                    {_.no}
                   </Badge>
                 )}
               </TableCell>
