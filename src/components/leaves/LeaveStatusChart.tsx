@@ -25,7 +25,7 @@ export function LeaveStatusChart({ leaves }: LeaveStatusChartProps) {
     { 
       status: 'PENDING', 
       count: statusCounts.PENDING || 0, 
-      color: `#f59e0b1`, 
+      color: `#f59e0b`, 
       icon: Clock 
     },
     { 
