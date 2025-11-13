@@ -69,7 +69,8 @@
         "Balance": "Balance",
         "History": "History",
         "noPermission": "You don't have permission to access this page.",
-        "description4" : "Manage leave types and policies"
+        "description4" : "Manage leave types and policies",
+        "leaveRequestStatus": "Leave Requests Status"
     },
     "users": {
         "profile": "User Profile",
@@ -101,6 +102,7 @@
     "employees": "Employees",
     "noEmployees": "No employees found",
     "noEmployeesDescription": "Try adjusting your filters or search",
+    "MonthlyLeaveTrends": "Monthly Leave Trends",
     "delete": "Delete",
     "cancel": "Cancel",
     "date": "Date",

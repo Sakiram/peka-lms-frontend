@@ -11,6 +11,9 @@ import { LeaveBalanceCard } from '@/components/leaves/LeaveBalanceCard';
 import { LeavesTable } from '@/components/leaves/LeavesTable';
 import { LeaveLogsModal } from '@/components/leaves/LeaveLogsModal';
 import * as _ from '@/constants/en.json';
+import { LeaveStatsCards } from '@/components/leaves/LeaveStatsCard';
+import { MonthlyLeaveTrendsChart } from '@/components/leaves/MonthlyLeaveTrendsChart';
+import { LeaveStatusChart } from '@/components/leaves/LeaveStatusChart';
 
 export function Leaves() {
   const [applyModalOpen, setApplyModalOpen] = useState(false);
@@ -74,6 +77,19 @@ export function Leaves() {
           <AlertCircle className="h-4 w-4" />
           <AlertDescription>{error}</AlertDescription>
         </Alert>
+      )}
+
+      {!loading && (
+        <div className="mb-8">
+          <LeaveStatsCards leaves={leaves} leaveBalances={leaveBalances} />
+        </div>
+      )}
+      
+      {!loading && leaves.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <MonthlyLeaveTrendsChart leaves={leaves} />
+          <LeaveStatusChart leaves={leaves} />
+        </div>
       )}
 
       <div className="mb-8">
