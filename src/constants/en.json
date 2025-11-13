@@ -92,6 +92,7 @@
         "description1": "Manage employees and organizational settings",
         "invite": "Invite User"
     },
+    "themes": ["Default", "Purple", "Blue", "Pink", "Claude", "CyberPunk", "T3", "Vintage"],
     "you": "You",
     "roles": ["Employee", "Manager", "HR", "Admin", "All Roles"],
     "pages": [5, 10, 25, 50],

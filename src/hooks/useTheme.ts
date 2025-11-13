@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-export type ColorScheme = 'default' | 'purple' | 'caffine';
+export type ColorScheme = 'default' | 'purple' | 'blue' | 'pink' | 'vintage' | 'cyberPunk' | 'claude' | 't3';
 export type Mode = 'light' | 'dark';
 
 const SCHEME_KEY = 'color-scheme';
 const MODE_KEY = 'color-mode';
 
 export const useTheme = () => {
-  const [colorScheme, setColorScheme] = useState<ColorScheme>('purple');
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('default');
   const [mode, setMode] = useState<Mode>('light');
   const [mounted, setMounted] = useState(false);
 
@@ -25,7 +25,7 @@ export const useTheme = () => {
   const applyTheme = (scheme: ColorScheme, themeMode: Mode) => {
     const root = document.documentElement;
     
-    root.classList.remove('default', 'purple', 'caffine', 'light', 'dark');
+    root.classList.remove('default', 'purple', 'blue', 'pink', 'vintage', 'cyberPunk', 'claude', 't3', 'light', 'dark');
     
     root.classList.add(scheme, themeMode);
     
