@@ -33,7 +33,8 @@
         "edit": "Edit Holiday",
         "update": "Update holiday information",
         "description": "Manage company holidays and events",
-        "allYears": "All Years"
+        "allYears": "All Years",
+        "variable": "Variable"
     },
     "leaves" : {
         "name": "Leaves",

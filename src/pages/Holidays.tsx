@@ -5,10 +5,11 @@ import { DashboardLayout } from '@/components/ui/layout/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/shadcn/card';
 import { Button } from '@/components/ui/shadcn/button';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { Calendar, AlertCircle, CalendarPlus, CalendarDays } from 'lucide-react';
+import { Calendar, AlertCircle, CalendarPlus, CalendarDays, LayoutGrid, Table as TableIcon } from 'lucide-react';
 import { holidaysAPI } from '@/api/endpoints/holidays';
 import type { Holiday } from '@/types/holidays';
 import { HolidaysTable } from '@/components/holidays/HolidaysTable';
+import { HolidaysCardView } from '@/components/holidays/HolidaysCardView';
 import { AddHolidayModal } from '@/components/holidays/AddHolidayModal';
 import { EditHolidayModal } from '@/components/holidays/EditHolidayModal';
 import { DeleteHolidayDialog } from '@/components/holidays/DeleteHolidayDialog';
@@ -17,6 +18,7 @@ import * as _ from '@/constants/en.json';
 export function Holidays() {
   const { user } = useSelector((state: RootState) => state.auth);
   const [showAllYears, setShowAllYears] = useState(false);
+  const [viewMode, setViewMode] = useState<'table' | 'card'>('card');
   const currentYear = new Date().getFullYear();
 
   if (!user || !['ADMIN', 'HR'].includes(user.role)) {
@@ -96,23 +98,42 @@ export function Holidays() {
         </Alert>
       )}
 
-      <div className="flex gap-2 mb-4">
-        <Button
-          variant={!showAllYears ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setShowAllYears(false)}
-        >
-          <Calendar className="h-4 w-4 mr-1" />
-          {currentYear}
-        </Button>
-        <Button
-          variant={showAllYears ? 'default' : 'outline'}
-          size="sm"
-          onClick={() => setShowAllYears(true)}
-        >
-          <CalendarDays className="h-4 w-4 mr-1" />
-          {_.holidays.allYears}
-        </Button>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex gap-2">
+          <Button
+            variant={!showAllYears ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setShowAllYears(false)}
+          >
+            <Calendar className="h-4 w-4 mr-1" />
+            {currentYear}
+          </Button>
+          <Button
+            variant={showAllYears ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setShowAllYears(true)}
+          >
+            <CalendarDays className="h-4 w-4 mr-1" />
+            {_.holidays.allYears}
+          </Button>
+        </div>
+
+        <div className="flex gap-2">
+          <Button
+            variant={viewMode === 'card' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setViewMode('card')}
+          >
+            <LayoutGrid className="h-4 w-4" />
+          </Button>
+          <Button
+            variant={viewMode === 'table' ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setViewMode('table')}
+          >
+            <TableIcon className="h-4 w-4" />
+          </Button>
+        </div>
       </div>
 
       <Card>
@@ -123,12 +144,21 @@ export function Holidays() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <HolidaysTable
-            holidays={holidays}
-            isLoading={loading}
-            onEdit={handleEditClick}
-            onDelete={handleDeleteClick}
-          />
+          {viewMode === 'table' ? (
+            <HolidaysTable
+              holidays={holidays}
+              isLoading={loading}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
+          ) : (
+            <HolidaysCardView
+              holidays={holidays}
+              isLoading={loading}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteClick}
+            />
+          )}
         </CardContent>
       </Card>
 
