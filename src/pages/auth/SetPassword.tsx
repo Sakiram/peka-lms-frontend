@@ -103,7 +103,7 @@ export function SetPassword() {
     }
   };
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-primary-50 px-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="flex items-center gap-2 text-2xl font-bold">
