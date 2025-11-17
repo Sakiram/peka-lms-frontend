@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/shadcn/select';
 import { Alert, AlertDescription } from '@/components/ui/shadcn/alert';
-import { AlertCircle, UserPlus } from 'lucide-react';
+import { AlertCircle, UserPlus, Upload, X } from 'lucide-react';
 import { invitesAPI } from '@/api/endpoints/invites';
 import * as _ from '@/constants/en.json';
 
@@ -37,6 +37,8 @@ export function InviteUserModal({
   managers,
   isLoadingManagers,
 }: InviteUserModalProps) {
+  const [isBulkMode, setIsBulkMode] = useState(false);
+  const [csvFile, setCsvFile] = useState<File | null>(null);
   const [formData, setFormData] = useState({
     email: '',
     role: '',
@@ -45,6 +47,7 @@ export function InviteUserModal({
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -54,7 +57,59 @@ export function InviteUserModal({
     setError('');
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+        setError('Please upload a valid CSV file');
+        setCsvFile(null);
+        return;
+      }
+      setCsvFile(file);
+      setError('');
+    }
+  };
+
+  const handleRemoveFile = () => {
+    setCsvFile(null);
+    const fileInput = document.getElementById('csv-file') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';
+  };
+
+  const handleBulkSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!csvFile) {
+      setError('Please select a CSV file');
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setSuccessMessage('');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', csvFile);
+
+      const response = await invitesAPI.bulkInvite(formData);
+
+      setSuccessMessage(
+        `${response.total} invites queued for processing!`
+      );
+      setTimeout(() => { handleClose(); onSuccess();}, 2000);
+    } catch (err: any) {
+      setError(
+        err.response?.data?.error || 
+        err.response?.data?.message || 
+        'Failed to upload CSV file'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSingleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.email) {
@@ -106,7 +161,10 @@ export function InviteUserModal({
       role: '',
       reporting_to: '',
     });
+    setCsvFile(null);
     setError('');
+    setSuccessMessage('');
+    setIsBulkMode(false);
     onClose();
   };
 
@@ -116,14 +174,110 @@ export function InviteUserModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <UserPlus className="h-5 w-5" />
-            {_.users.inviteUser}
+            {isBulkMode ? 'Bulk Invite Users' : _.users.inviteUser}
           </DialogTitle>
           <DialogDescription>
-            {_.users.inviteUserDescription}
+            {isBulkMode 
+              ? 'Upload a CSV file to invite multiple users at once' 
+              : _.users.inviteUserDescription
+            }
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="flex gap-2 p-1 bg-muted rounded-lg">
+          <Button
+            type="button"
+            variant={!isBulkMode ? 'default' : 'ghost'}
+            size="sm"
+            className="flex-1"
+            onClick={() => {
+              setIsBulkMode(false);
+              setError('');
+              setCsvFile(null);
+            }}
+          >
+            Single Invite
+          </Button>
+          <Button
+            type="button"
+            variant={isBulkMode ? 'default' : 'ghost'}
+            size="sm"
+            className="flex-1"
+            onClick={() => {
+              setIsBulkMode(true);
+              setError('');
+              setFormData({ email: '', role: '', reporting_to: '' });
+            }}
+          >
+            <Upload className="h-4 w-4 mr-2" />
+            Bulk Upload
+          </Button>
+        </div>
+
+        {isBulkMode ? (
+          <form onSubmit={handleBulkSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="csv-file">
+                CSV File <span className="text-destructive">*</span>
+              </Label>
+              <div className="flex flex-col gap-2">
+                <Input
+                  id="csv-file"
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileChange}
+                  disabled={loading}
+                  className="cursor-pointer"
+                />
+                {csvFile && (
+                  <div className="flex items-center justify-between p-2 bg-muted rounded-md">
+                    <span className="text-sm truncate">{csvFile.name}</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={handleRemoveFile}
+                      disabled={loading}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                CSV format: email, role, reporting_to (optional)
+              </p>
+            </div>
+
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {successMessage && (
+              <Alert className="border-green-500 text-green-700">
+                <AlertDescription>{successMessage}</AlertDescription>
+              </Alert>
+            )}
+
+            <div className="flex gap-2 justify-end pt-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleClose}
+                disabled={loading}
+              >
+                {_.cancel}
+              </Button>
+              <Button type="submit" disabled={loading || !csvFile}>
+                {loading ? 'Uploading...' : 'Upload & Send Invites'}
+              </Button>
+            </div>
+          </form>
+        ) : (
+        <form onSubmit={handleSingleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">
               {_.email} <span className="text-destructive">*</span>
@@ -205,6 +359,7 @@ export function InviteUserModal({
             </Button>
           </div>
         </form>
+      )}
       </DialogContent>
     </Dialog>
   );

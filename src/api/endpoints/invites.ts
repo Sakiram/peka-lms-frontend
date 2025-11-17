@@ -11,4 +11,13 @@ export const invitesAPI = {
     const { data } = await apiClient.post('/invites/', payload);
     return data;
   },
+  
+  bulkInvite: async (formData: FormData) => {
+    const response = await apiClient.post('/invites/bulk', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
 };
