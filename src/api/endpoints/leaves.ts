@@ -42,8 +42,8 @@ export const leavesAPI = {
     return data;
   },
   
-  getLeaveRequests: async (): Promise<LeaveRequestsResponse> => {
-    const { data } = await apiClient.get<LeaveRequestsResponse>('/leaves/requests');
+  getLeaveRequests: async (filter: string): Promise<LeaveRequestsResponse> => {
+    const { data } = await apiClient.get<LeaveRequestsResponse>(filter === 'all' ? '/leaves/requests' : `/leaves/requests?status=${filter}`);
     return data;
   },
 

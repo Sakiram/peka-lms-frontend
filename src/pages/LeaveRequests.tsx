@@ -21,7 +21,6 @@ import * as _ from '@/constants/en.json';
 export function LeaveRequests() {
   const { user } = useSelector((state: RootState) => state.auth);
 
-  // Permission check - Only ADMIN, HR, MANAGER
   if (!user || !['ADMIN', 'HR', 'MANAGER'].includes(user.role)) {
     return (
       <DashboardLayout>
@@ -35,38 +34,30 @@ export function LeaveRequests() {
     );
   }
 
-  const [requests, setRequests] = useState<LeaveRequest[]>([]);
   const [filteredRequests, setFilteredRequests] = useState<LeaveRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
 
-  // Action dialog state
   const [actionDialogOpen, setActionDialogOpen] = useState(false);
   const [selectedLeaveId, setSelectedLeaveId] = useState<string | null>(null);
   const [selectedUsername, setSelectedUsername] = useState<string>('');
   const [selectedAction, setSelectedAction] = useState<'approve' | 'reject' | null>(null);
+  const [pendingCount, setPendingCount] = useState(0);
 
   useEffect(() => {
     loadRequests();
-  }, []);
-
-  useEffect(() => {
-    // Filter requests based on status
-    if (statusFilter === 'all') {
-      setFilteredRequests(requests);
-    } else {
-      setFilteredRequests(requests.filter(req => req.status === statusFilter));
-    }
-  }, [statusFilter, requests]);
+  }, [statusFilter]);
 
   const loadRequests = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await leavesAPI.getLeaveRequests();
-      setRequests(response.data);
+      const response = await leavesAPI.getLeaveRequests(statusFilter);
       setFilteredRequests(response.data);
+      if(statusFilter === 'all'){
+       setPendingCount(response.data.filter(r => r.status === 'PENDING').length)
+      }
     } catch (err: any) {
       setError(
         err.response?.data?.message || 'Failed to load leave requests'
@@ -91,14 +82,11 @@ export function LeaveRequests() {
   };
 
   const handleSuccess = () => {
-    loadRequests(); // Refresh list
+    loadRequests();
   };
-
-  const pendingCount = requests.filter(r => r.status === 'PENDING').length;
 
   return (
     <DashboardLayout>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold">{_.leaves.leaveRequests}</h1>
