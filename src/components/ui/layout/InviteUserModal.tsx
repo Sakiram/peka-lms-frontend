@@ -196,7 +196,7 @@ export function InviteUserModal({
               setCsvFile(null);
             }}
           >
-            Single Invite
+            {_.users.singleInvite}
           </Button>
           <Button
             type="button"
@@ -210,7 +210,7 @@ export function InviteUserModal({
             }}
           >
             <Upload className="h-4 w-4 mr-2" />
-            Bulk Upload
+            {_.users.bulkInvite}
           </Button>
         </div>
 
@@ -245,7 +245,7 @@ export function InviteUserModal({
                 )}
               </div>
               <p className="text-xs text-muted-foreground">
-                CSV format: email, role, reporting_to (optional)
+                {_.users.bulkInviteDescription}
               </p>
             </div>
 

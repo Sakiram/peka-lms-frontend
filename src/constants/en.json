@@ -92,7 +92,10 @@
         "editDescription": "Update user information. Only changed fields will be saved.",
         "noPermission": "Only admins can access this page.",
         "description1": "Manage employees and organizational settings",
-        "invite": "Invite User"
+        "invite": "Invite User",
+        "singleInvite": "Single Invite",
+        "bulkInvite": "Bulk Upload",
+        "bulkInviteDescription": "CSV format: email, role, reporting_to (optional)"
     },
     "themes": ["Default", "Purple", "Blue", "Pink", "Claude", "CyberPunk", "T3", "Vintage"],
     "you": "You",
