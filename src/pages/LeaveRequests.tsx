@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/shadcn/select';
 import * as _ from '@/constants/en.json';
+import { UsersPagination } from '@/components/users/UserPagination';
 
 export function LeaveRequests() {
   const { user } = useSelector((state: RootState) => state.auth);
@@ -44,19 +45,25 @@ export function LeaveRequests() {
   const [selectedUsername, setSelectedUsername] = useState<string>('');
   const [selectedAction, setSelectedAction] = useState<'approve' | 'reject' | null>(null);
   const [pendingCount, setPendingCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     loadRequests();
-  }, [statusFilter]);
+  }, [statusFilter, page, limit]);
 
   const loadRequests = async () => {
     try {
       setLoading(true);
       setError('');
-      const response = await leavesAPI.getLeaveRequests(statusFilter);
-      setFilteredRequests(response.data);
+      const response = await leavesAPI.getLeaveRequests(statusFilter, page, limit);
+      setFilteredRequests(response.data.data);
+      setTotal(response.data.total);
+      setTotalPages(response.data.totalPages);
       if(statusFilter === 'all'){
-       setPendingCount(response.data.filter(r => r.status === 'PENDING').length)
+       setPendingCount(response.data.data.filter(r => r.status === 'PENDING').length)
       }
     } catch (err: any) {
       setError(
@@ -138,6 +145,17 @@ export function LeaveRequests() {
             isLoading={loading}
             onApprove={handleApprove}
             onReject={handleReject}
+          />
+          <UsersPagination
+            page={page}
+            limit={limit}
+            total={total}
+            totalPages={totalPages}
+            onPageChange={setPage}
+            onLimitChange={(newLimit) => {
+              setLimit(newLimit);
+              setPage(1);
+            }}
           />
         </CardContent>
       </Card>

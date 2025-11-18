@@ -103,7 +103,13 @@ export interface LeaveRequest {
 
 export interface LeaveRequestsResponse {
   success: boolean;
-  data: LeaveRequest[];
+  data: {
+    data: LeaveRequest[];
+    totalPages: number;
+    total: number;
+    limit: number;
+    page: number;
+  };
 }
 
 export interface LeaveType {

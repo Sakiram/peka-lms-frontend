@@ -33,7 +33,7 @@ export function UsersPagination({
     <div className="flex items-center justify-between mt-6 p-4 bg-muted rounded-lg">
       <div className="flex items-center gap-4">
         <div className="text-sm text-muted-foreground">
-          Showing {startItem} to {endItem} of {total} users
+          Showing {startItem} to {endItem} of {total}
         </div>
         
         <div className="flex items-center gap-2">

@@ -42,8 +42,13 @@ export const leavesAPI = {
     return data;
   },
   
-  getLeaveRequests: async (filter: string): Promise<LeaveRequestsResponse> => {
-    const { data } = await apiClient.get<LeaveRequestsResponse>(filter === 'all' ? '/leaves/requests' : `/leaves/requests?status=${filter}`);
+  getLeaveRequests: async (filter: string, page: number = 1, limit: number = 10): Promise<LeaveRequestsResponse> => {
+    const params = new URLSearchParams();
+    if (filter && filter !== 'all') params.append('status', filter);
+    params.append('page', page.toString());
+    params.append('limit', limit.toString());
+    const endpoint = `/leaves/requests${params.toString() ? '?' + params.toString() : ''}`;
+    const { data } = await apiClient.get<LeaveRequestsResponse>(endpoint);
     return data;
   },
 

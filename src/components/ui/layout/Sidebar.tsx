@@ -137,8 +137,8 @@ export function Sidebar() {
             }}
             className="w-full flex items-center justify-start  gap-3 rounded-lg transition-colors w-full bg- text-foreground hover:bg-muted"
           >
-            <FilePlus2 className="h-5 w-5" />
-            <span className="font-medium">{_.leaves.applyLeave}</span>
+            <FilePlus2 className="h-5 w-5 ml-1.5" />
+            <span className="ml-1 text-base">{_.leaves.applyLeave}</span>
           </Button>
         </nav>
 
